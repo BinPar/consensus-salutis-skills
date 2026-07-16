@@ -1,0 +1,19 @@
+{
+  "name": "consensus-salutis-skills",
+  "owner": {
+    "name": "BinPar"
+  },
+  "metadata": {
+    "description": "Consensus Salutis agent skills for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "consensus-salutis-skills",
+      "description": "Consensus Salutis agent skills collection",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/consensus-salutis-brand-design-system"]
+    }
+  ]
+}
