@@ -112,7 +112,8 @@ Plus Jakarta Sans ExtraBold.
    (header on the website — elsewhere, the one element that must pop)
 
 **Blog / Content**
-1. Card, index and article layouts → `references/blog-patterns.md`
+1. Content engine (MDX + Zod frontmatter), cards, index, tags, covers, OG
+   image and feeds → `references/blog-patterns.md`
 2. MDX body typography recipe → `references/typography.md`
 
 **Marketing Asset (Social, Banner, Presentation)**
@@ -264,7 +265,7 @@ When reviewing or producing any Consensus Salutis artifact, verify:
 | `references/ui-components.md` | Buttons, cards, header/footers, forms, pagination, chat mock | Building UI components |
 | `references/motion-system.md` | Grid bg, SignalField, blobs, reveals, counters, micro-interactions | Adding motion, page shells |
 | `references/landing-patterns.md` | Vertical home structure, panels, section rhythm, content blocks | Building landing/marketing pages |
-| `references/blog-patterns.md` | Article model, cards, index, article page | Building blog/content surfaces |
+| `references/blog-patterns.md` | MDX content engine, covers, OG image, cards, index, tags, feeds | Building blog/content surfaces |
 
 ---
 
@@ -326,5 +327,5 @@ Forms/fields with the teal focus ring recipe.
 | Landing patterns | `horizontal-home.tsx` (VerticalHome = canonical), `page.tsx` |
 | Chat mock | `clinical-chat-mock.tsx` |
 | Forms | `contact-form.tsx` |
-| Blog | `blog/page.tsx`, `blog/[slug]/page.tsx`, `blog-article-card.tsx`, `blog-articles.ts` |
+| Blog | `src/lib/blog.ts`, `src/content/blog/`, `blog/page.tsx`, `blog/[slug]/page.tsx`, `blog/tag/[tag]/page.tsx`, `blog-index.tsx`, `blog-article-card.tsx`, `blog-cover.tsx` |
 | Logos & favicon | `public/logos/consensus-brand/`, `public/favicon.svg` |
