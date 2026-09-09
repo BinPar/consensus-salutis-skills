@@ -13,7 +13,10 @@
       "description": "Consensus Salutis agent skills collection",
       "source": "./",
       "strict": false,
-      "skills": ["./skills/consensus-salutis-brand-design-system"]
+      "skills": [
+        "./skills/consensus-salutis-brand-design-system",
+        "./skills/consensus-salutis-brand-voice"
+      ]
     }
   ]
 }

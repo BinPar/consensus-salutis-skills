@@ -40,7 +40,9 @@ After creating a new skill, add its path to `.claude-plugin/marketplace.json` in
 
 ## Source of truth
 
-The `consensus-salutis-brand-design-system` skill is extracted from two sources:
+### `consensus-salutis-brand-design-system`
+
+Extracted from two sources:
 
 - The brand identity manual PDF (logo, philosophy, palette, Plus Jakarta Sans)
 - The production website implementation in the `consensus-salutis-website` repo
@@ -53,6 +55,23 @@ details; the PDF wins for brand-identity rules (logo construction, core palette)
 Note: the definitive home layout is the **vertical** one (`VerticalHome`,
 `env.VERTICAL_HOME`). The horizontal rail variant exists but is not the canonical
 landing pattern.
+
+### `consensus-salutis-brand-voice`
+
+Sister skill: the design system says how the brand looks, the voice skill says how
+it talks. Extracted from:
+
+- The brand identity manual
+- The production copy in the `consensus-salutis-website` repo (`src/app/plataforma`,
+  `src/app/evidencia`, `src/app/seguridad`, `VerticalHome`, and the blog posts in
+  `src/content/blog/`)
+- The functional documents in the `consensus-salutis` repo (`docs/`) — background
+  only, and subject to the skill's own disclosure boundary: implementation terms
+  (Convex, AI SDK, CRC, anchors, deltas, VFS, model names) never reach public copy
+
+The website copy is the tone of record. When it changes, update
+`references/examples-and-rewrites.md` and the quoted fragments to match. Every
+quoted string, example and rewrite stays in Spanish; the skill prose is English.
 
 ## Language
 
