@@ -1,4 +1,16 @@
-# Consensus Salutis Skills Repository
+# BinPar Skills Repository (consensus-salutis-skills)
+
+## Naming
+
+- The product was renamed **BinPar** (website `05d5437`, 2026-10-06; it was
+  Consensus Salutis). All user-facing skill content says "BinPar".
+- Skill IDs, directory names, the plugin/marketplace name
+  (`consensus-salutis-skills`) and this repo name keep the legacy
+  `consensus-salutis-` prefix on purpose: renaming breaks installed copies
+  (`skills-lock.json`, `.claude/skills` symlinks, slash commands). The website
+  does the same with `consensus-theme`, author id `equipo-consensus-salutis`
+  and the `consensussalutis.com` domain.
+- Last alignment with the website: HEAD `70613ae` (2026-10-16).
 
 ## Project structure
 
@@ -44,17 +56,29 @@ After creating a new skill, add its path to `.claude-plugin/marketplace.json` in
 
 Extracted from two sources:
 
-- The brand identity manual PDF (logo, philosophy, palette, Plus Jakarta Sans)
 - The production website implementation in the `consensus-salutis-website` repo
-  (`src/styles/globals.css`, `src/app/layout.tsx`, `src/app/_components/`)
+  (`src/styles/globals.css`, `src/app/layout.tsx`, `src/app/_components/` incl.
+  `home-cover.*`, `brand-isotype-*`, `section-navigation.*`,
+  `contrast-footer.tsx` + `footer-design.css`, `volume-section.*`,
+  `contact-assistant/*`; logos and favicon from `public/logos/binpar-brand/`
+  and `public/favicon.*`)
+- The Consensus Salutis-era brand identity manual PDF — now only for the base
+  palette and Plus Jakarta Sans. Its logo and philosophy chapters describe the
+  retired C+S mark; there is no BinPar brand manual in any repo yet.
 
-When the website implementation changes (tokens, components, motion), update the
-skill references to match. The website code wins over the PDF for implementation
-details; the PDF wins for brand-identity rules (logo construction, core palette).
+When the website implementation changes (tokens, components, motion, logos),
+update the skill references to match, and re-copy the assets byte-for-byte
+(recompute the favicon `?v=` hashes). Code wins for logo usage and
+implementation details; the palette follows the tokens. The brand-mark loader
+recipe has no website equivalent: it is the canonical spec for the product
+apps.
 
 Note: the definitive home layout is the **vertical** one (`VerticalHome`,
-`env.VERTICAL_HOME`). The horizontal rail variant exists but is not the canonical
-landing pattern.
+`env.VERTICAL_HOME`, default `"false"`), opened by `HomeCover` and built from
+`HomePaintPanel` sections registered in `SectionNavigation`. The horizontal
+rail variant exists but is not the canonical landing pattern. Never cite the
+private `src/app/casos-lab/**` route or the deleted `/casos`, `/evidencia`,
+`/seguridad` pages.
 
 ### `consensus-salutis-brand-voice`
 
@@ -62,9 +86,11 @@ Sister skill: the design system says how the brand looks, the voice skill says h
 it talks. Extracted from:
 
 - The brand identity manual
-- The production copy in the `consensus-salutis-website` repo (`src/app/plataforma`,
-  `src/app/evidencia`, `src/app/seguridad`, `VerticalHome`, and the blog posts in
-  `src/content/blog/`)
+- The production copy in the `consensus-salutis-website` repo (`home-cover.tsx`,
+  `horizontal-home.tsx` → `VerticalHome`/`HeroPanel`,
+  `clinical-process-showcase.tsx`, `product-strata/`, `volume-section.tsx`,
+  `success-cases/success-cases-data.ts`, `contact-assistant/`,
+  `platform-walkthrough.tsx`, and the blog posts in `src/content/blog/`)
 - The functional documents in the `consensus-salutis` repo (`docs/`) — background
   only, and subject to the skill's own disclosure boundary: implementation terms
   (Convex, AI SDK, CRC, anchors, deltas, VFS, model names) never reach public copy

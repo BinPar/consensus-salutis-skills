@@ -23,9 +23,9 @@ audit you produce when handed existing copy.
 | H4 | Implies CE marking, MDR, medical-device status, certification or AI Act conformity |
 | H5 | Names a competitor, a model, or a model provider |
 | H6 | Personifies the system: entiende, sabe, interpreta, juzga, decide, opina, razona, aprende de ti |
-| H7 | Crosses the disclosure boundary: Convex, AI SDK, CRC, anchor, delta, VFS, table names, model slots, internal tags |
+| H7 | Crosses the disclosure boundary: Convex, AI SDK, CRC, anchor, delta, VFS, table names, model slots, internal tags, *orquestador* / *agentes expertos* / *sub-agente* as names of the architecture |
 | H8 | Commercial fear framing |
-| H9 | Attributes clinical responsibility to the system, or omits the professional's judgement where the sentence needs it |
+| H9 | Attributes clinical responsibility to the system, or omits the professional's judgement where the sentence needs it; a *comité* that "validates" or "reviews" an answer (implies a human review that did not happen) |
 
 ### MEDIUM findings
 
@@ -37,7 +37,7 @@ audit you produce when handed existing copy.
 | M4 | Second person: tú, usted, tu, tus, imperatives addressed to the reader |
 | M5 | Corporate first person: nosotros, creemos, revisamos, hablemos |
 | M6 | Product in the opening, in the close, or more than twice in the body (except nota de producto) |
-| M7 | Banned lexicon: copiloto, asistente virtual, agente, cerebro clínico, segunda opinión |
+| M7 | Banned lexicon: copiloto, asistente virtual, agente, cerebro clínico, segunda opinión, orquestado / orquestación as an adjective or abstract noun (*orquestador* is H7). *comité clínico* and *comité de expertos* are allowed |
 | M8 | Corporate buzzword |
 | M9 | Uncalibrated absolute: garantiza, elimina el error, siempre, cualquier pregunta |
 | M10 | Word budget overrun, per piece or per section, beyond 15 % |
@@ -45,6 +45,7 @@ audit you produce when handed existing copy.
 | M12 | Closing with a CTA in a reflective archetype |
 | M13 | Filler connective: por otro lado, en este sentido, cabe destacar, en definitiva |
 | M14 | Unmarked anglicism where Spanish exists |
+| M15 | Product name: the legacy name (Consensus Salutis, Consensus, CS) in new copy outside a single "antes Consensus Salutis" note, or BinPar misspelt (Binpar, BINPAR typed, Bin Par) |
 
 ### LOW findings
 
@@ -60,6 +61,7 @@ audit you produce when handed existing copy.
 | L8 | More than one image, or a keyword-list `alt` |
 | L9 | `readTime` inconsistent with word count |
 | L10 | Bold applied to a whole sentence, or more than once per paragraph |
+| L11 | Typo, missing word or broken agreement |
 
 ---
 
@@ -104,6 +106,21 @@ Rules for the table:
 A HIGH finding always forces *reescritura*, even if it is a single word. That is the point of the
 severity.
 
+### Reviewing the site's own copy: known debt
+
+Some current website copy breaks this skill on purpose or by drift: *agentes expertos* and
+*orquestador* in the process walkthrough (H7), *orquestado* in the home hero (M7), experts quoted
+in the first person and a described patient taken to considerations (H6, H1), the hype headline
+"El futuro de la salud. Ya está aquí." (M8, M9), *tú* and *nosotros* on the contact and platform
+pages (M4, M5), "BINPAR" typed in the architecture graphic's label (M15), the missing *es* in
+the cover lede (L11) and trailing periods on every display heading (L1). The full list, with
+rewrites, is `examples-and-rewrites.md` §12.
+
+- **Flag them anyway**, with their codes, and add *deuda conocida* to the rewrite cell. Known
+  debt does not lower the severity or soften the verdict.
+- **A new draft that copies one of them** is an ordinary finding. Being on the site is not
+  precedent.
+
 ---
 
 ## 3. Pre-delivery checklist
@@ -126,6 +143,8 @@ Run in this order. Steps 1-4 are cheap and catch most of it.
 - [ ] Search for `nosotros`, `creemos`, `revisamos`, `hablemos`, `nuestro`. Zero hits outside a
       nota de producto
 - [ ] Product name appears zero times in the opening and the close, at most twice in the body
+- [ ] Search for `Consensus`, `Binpar`, `BINPAR`, `Bin Par`. Zero hits outside one "antes Consensus
+      Salutis" note, an address (`consensussalutis.com`) or an ID (`equipo-consensus-salutis`)
 - [ ] Deleting every product mention leaves the piece standing
 
 ### Personification pass
@@ -145,12 +164,15 @@ Run in this order. Steps 1-4 are cheap and catch most of it.
 ### Disclosure pass
 
 - [ ] Search for `Convex`, `AI SDK`, `CRC`, `checksum`, `anchor`, `delta`, `VFS`, `prompt`,
-      `embedding`, `RAG`, `chunk`, `orquestador`, `sub-agente`, `tool`. Zero hits
+      `embedding`, `RAG`, `chunk`, `orquestador`, `agentes expertos`, `sub-agente`, `tool`. Zero
+      hits (H7)
 - [ ] No sentence that only makes sense to someone who has read the repository
 
 ### Voice pass
 
 - [ ] Archetype declared; word budget per section written down and respected
+- [ ] Search for `copiloto`, `asistente virtual`, `agente`, `cerebro clínico`, `segunda opinión`,
+      `orquestad`. Zero hits (M7)
 - [ ] Every claim has a role, document, decision or failure mode attached
 - [ ] No paragraph restates the previous one; no hedged non-claims
 - [ ] `de` count per sentence under three
@@ -166,8 +188,8 @@ Run in this order. Steps 1-4 are cheap and catch most of it.
 
 Input fragment (a draft hero for a product page):
 
-> "Consensus Salutis es el copiloto clínico que entiende tus dudas y te da la respuesta correcta,
-> reduciendo errores diagnósticos. Certificado para entornos sanitarios europeos."
+> "BinPar es el copiloto clínico que entiende tus dudas y te da la respuesta correcta, reduciendo
+> errores diagnósticos. Certificado para entornos sanitarios europeos."
 
 Output:
 
@@ -175,7 +197,7 @@ Output:
 ## Auditoría de voz — hero de producto (borrador)
 
 Arquetipo declarado: nota de producto
-Extensión: 28 palabras (presupuesto: 500-800 para la pieza completa)
+Extensión: 23 palabras (presupuesto: 500-800 para la pieza completa)
 
 | # | Fragmento | Código | Severidad | Reescritura propuesta |
 |---|---|---|---|---|
@@ -189,10 +211,10 @@ Extensión: 28 palabras (presupuesto: 500-800 para la pieza completa)
 
 Propuesta completa:
 
-"Consensus Salutis convierte guías, protocolos y documentación propia en una consulta clínica
-trazable. Cada respuesta puede enlazar al fragmento original que la sustenta, y el criterio
-profesional decide. Diseñado para operar en la Unión Europea, con auditoría completa e historial
-de versiones."
+"BinPar convierte guías, protocolos y documentación propia en una consulta clínica trazable.
+Cada respuesta puede enlazar al fragmento original que la sustenta, y el criterio profesional
+decide. Diseñado para operar en la Unión Europea, con auditoría completa e historial de
+versiones."
 ```
 
 Note what the review does: it names codes, it quotes verbatim, it rewrites every row, and it ends

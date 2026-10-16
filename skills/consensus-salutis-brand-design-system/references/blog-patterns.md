@@ -5,7 +5,8 @@
 > `src/app/blog/[slug]/page.tsx`, `src/app/blog/[slug]/opengraph-image.tsx`,
 > `src/app/_components/blog-index.tsx`, `blog-article-card.tsx`, `blog-cover.tsx`,
 > `src/lib/blog-cover.ts`, `src/app/sitemap.ts`, `robots.ts`,
-> `src/app/blog/rss.xml/route.ts`.
+> `src/app/blog/rss.xml/route.ts`, `src/app/_components/home-blog.css`
+> (website HEAD `70613ae`).
 
 ## Content engine
 
@@ -17,11 +18,11 @@ loudly instead of publishing wrong.
 
 ```yaml
 ---
-title: "Cómo medir la fiabilidad de una respuesta clínica."
+title: "Cómo medir la fiabilidad de una respuesta clínica"   # no trailing period (brand voice)
 excerpt: "Criterios de evaluación, preguntas de control y revisión experta para sostener confianza institucional."
 date: 2026-02-11          # YYYY-MM-DD, unquoted
 updatedAt: 2026-03-02     # optional, never earlier than date
-author: equipo-consensus-salutis   # id from src/content/blog/authors.ts
+author: equipo-consensus-salutis   # id from authors.ts; displays "Equipo BinPar"
 type: mecanismo           # marco | mecanismo | sector | evidencia | nota-de-producto
 tags: ["Evaluación", "Trazabilidad", "Gobierno del conocimiento"]
 image: /blog/portada.webp # optional, absolute path in public/
@@ -40,7 +41,10 @@ es-ES short, formatted in **UTC** so a negative timezone can't subtract a day),
 as the author wrote them, which is what gets painted.
 
 Authors are a registry, not free text: `src/content/blog/authors.ts` maps an id
-to `{ name, role }`. No photo — the byline is text.
+to `{ name, role }`. No photo — the byline is text. Ids are stable keys: the
+team author kept the id `equipo-consensus-salutis` after the rename; only its
+display name changed to "Equipo BinPar" (role "Producto y evidencia clínica").
+Never rename an id to match a brand change.
 
 Drafts and future dates show in dev and preview, never in production
 (`includesUnpublishedPosts()`, `VERCEL_ENV` wins over `NODE_ENV`). Order is
@@ -73,8 +77,10 @@ don't read.
 always, from the title and the brand — independent of `image`. Deep navy
 `#06111f`, two radial turquoise/teal glows, two signal curves in `#00BCBB`,
 eyebrow "Lecturas clínicas" with a turquoise dot, title in three size steps
-(72 / 62 / 52 by length), footer rule with `autor · fecha` and "Consensus
-Salutis". Sora arrives as committed `.ttf` bytes from `src/app/_fonts/`
+(72 / 62 / 52 by length), footer rule with `autor · fecha` (fallback
+"consensussalutis.com", the domain) and the text signature "BinPar" (Sora 800,
+26px, `#f8fafc` — text, not the logo graphic). `alt = "BinPar · Lecturas
+clínicas"`. Sora arrives as committed `.ttf` bytes from `src/app/_fonts/`
 (ExtraBold 800 + SemiBold 600) read with `node:fs` — `next/og` knows nothing
 about `next/font/google`, and `next.config.js` keeps the files in the function
 bundle via `outputFileTracingIncludes`.
@@ -157,29 +163,41 @@ prerenderable). An unknown tag is a 404, not an empty grid.
   `openGraph type: "article"` with `publishedTime` / `modifiedTime` (image comes
   from `opengraph-image.tsx`), plus inline `schema.org/Article` JSON-LD that
   points at the OG image — it always exists and has the shape validators want.
-- Home "Lecturas clínicas" section (`HOME_POSTS = 4`): Eyebrow → H2 "Últimos
-  artículos" `text-5xl font-extrabold` → lede → "Ver todos" pill with
-  `ArrowRight`; grid `mt-8 gap-4 lg:grid-cols-3 xl:grid-cols-4`, 4th card hidden
-  between lg and xl, cards staggered 0.12s and reduced-motion safe.
+  Publisher: `{ "@type": "Organization", name: "BinPar", url, logo:
+  absoluteUrl("/favicon.svg") }` (the bare isotipo); author is a `Person` with
+  `name` + `jobTitle` from the registry.
+- Home "Lecturas clínicas" section (`HOME_POSTS = 4`, `#lecturas`, rendered
+  only when posts exist): Eyebrow → H2 "Últimos artículos" `text-5xl
+  font-extrabold` → lede → "Ver todos" pill with `ArrowRight`; grid `mt-8 gap-4
+  lg:grid-cols-3 xl:grid-cols-4`, 4th card hidden between lg and xl, cards
+  staggered 0.12s and reduced-motion safe. Surface `.home-blog-surface`: white
+  that fades to transparent over the last 128px (96px below 640px), so the
+  section dissolves into the contact area; transparent in dark.
 
 ## Discoverability
 
 - `src/app/sitemap.ts` — the **whole site**: public routes listed by hand with
   priorities (the filesystem can't tell a public page from a session-gated one),
   plus every post (`lastModified` = `updatedAt ?? date`, priority 0.7) and every
-  tag page (0.5). `PRIVATE_PATH_PREFIXES` stays out.
+  tag page (0.5). `PRIVATE_PATH_PREFIXES` (incl. the `/casos-lab` lab route)
+  stays out; deleted routes (`/casos`, `/evidencia`, `/seguridad`) were
+  removed from the list.
 - `src/app/robots.ts` — serves the sitemap and disallows the private prefixes;
   outside production it disallows everything, so a preview with drafts and
   future posts can't get indexed.
 - `src/app/blog/rss.xml/route.ts` — hand-built RSS 2.0 from the loader, so the
   feed inherits the draft/future filter. `dc:creator` for the byline (RSS 2.0
-  `<author>` demands an email), tags as `<category>`, `s-maxage=3600`. Linked
-  from `layout.tsx` via `alternates.types["application/rss+xml"]`.
+  `<author>` demands an email), tags as `<category>`, `s-maxage=3600`. Channel
+  title "BinPar · Lecturas clínicas". Linked from `layout.tsx` via
+  `alternates.types["application/rss+xml"]`.
 
 ## Editorial tone
 
-Titles are declarative Spanish sentences, sentence case, may end with a period
-("Cómo medir la fiabilidad de una respuesta clínica."). Excerpts are one dense,
-sober sentence — evidence/governance vocabulary, no hype. Tags are written as
-prose labels ("Gobierno del conocimiento"), and the slug is derived. `type`
-classifies the piece, it isn't shown as a badge.
+Titles are declarative Spanish sentences in sentence case, with no trailing
+period. The seed post's title ("Cómo medir la fiabilidad de una respuesta
+clínica.") and the site's display headings end with one: an observed exception
+on the site, known debt in `consensus-salutis-brand-voice` (L1), not a model.
+Excerpts are one dense, sober sentence with its full stop — evidence/governance
+vocabulary, no hype. Tags are written as prose labels ("Gobierno del
+conocimiento"), and the slug is derived. `type` classifies the piece, it isn't
+shown as a badge. Wording rules live in the brand voice skill.

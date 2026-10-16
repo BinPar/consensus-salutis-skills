@@ -47,7 +47,7 @@ supervising, accepting, escalating, publishing.
 > "Separar precisión, trazabilidad y utilidad no hace fiable a un sistema. Hace revisable la
 > decisión de aceptarlo, que es lo que una organización sanitaria necesita poder sostener."
 
-**Existing titles of this archetype:** *"Cómo medir la fiabilidad de una respuesta clínica"*,
+**Example titles for this archetype:** *"Cómo medir la fiabilidad de una respuesta clínica"*,
 *"Qué debe explicar una IA médica antes de recomendar una acción"*, *"Del piloto a producción:
 decisiones críticas para IA sanitaria"*.
 
@@ -84,7 +84,7 @@ table in `clinical-red-lines.md` §6 for every sentence that is tempted toward i
 > "Una cita que sobrevive a la actualización del documento no es un detalle técnico. Es la
 > diferencia entre una respuesta que puede revisarse y una que solo puede creerse."
 
-**Existing titles of this archetype:** *"Del documento fuente a la decisión: evidencia visible en
+**Example titles for this archetype:** *"Del documento fuente a la decisión: evidencia visible en
 cada consulta"*, *"Trazabilidad documental como requisito de confianza institucional"*,
 *"Diseñar una base de conocimiento sanitario preparada para cambiar"*.
 
@@ -118,7 +118,7 @@ and avoid dates and article numbers unless verified.
 > supervisa, con qué registro y bajo qué límites — y esa es una pregunta documental antes que
 > técnica."
 
-**Existing titles of this archetype:** *"Adopción responsable de IA clínica en organizaciones
+**Example titles for this archetype:** *"Adopción responsable de IA clínica en organizaciones
 sanitarias"*, *"Gobernar el conocimiento médico en el sector"*, *"Qué exige un despliegue
 responsable de IA en Atención Primaria"*.
 
@@ -151,7 +151,7 @@ outcome, explicitly, in the text, and not by omission alone.
 > nada sobre un paciente. La distancia entre esas dos afirmaciones es donde se decide si una
 > evaluación sirve."
 
-**Existing titles of this archetype:** *"Evaluar respuestas clínicas sin depender solo de
+**Example titles for this archetype:** *"Evaluar respuestas clínicas sin depender solo de
 benchmarks"*, *"Cómo definir preguntas de control para validar conocimiento médico"*,
 *"Métricas útiles para observar una plataforma clínica inteligente"*.
 
@@ -161,8 +161,8 @@ benchmarks"*, *"Cómo definir preguntas de control para validar conocimiento mé
 
 **When:** something shipped and the organisation needs to know it exists.
 
-**The typified exception.** Here the third person of Consensus Salutis governs, the product may
-open the piece, and one CTA is allowed at the close.
+**The typified exception.** Here the third person of BinPar governs, the product may open the
+piece, and one CTA is allowed at the close.
 
 **Structure and budget (500-800 words):**
 
@@ -183,9 +183,9 @@ información"*, *"No espere más"*, *"Descubre cómo"*.
 
 **Opening pattern:**
 
-> "Consensus Salutis incorpora preguntas de control configurables por la organización. Un
-> supervisor define el conjunto de preguntas que deben mantener su respuesta, y cada carga de
-> contenido se comprueba contra ellas antes de publicarse."
+> "BinPar incorpora preguntas de control configurables por la organización. Un supervisor
+> define el conjunto de preguntas que deben mantener su respuesta, y cada carga de contenido se
+> comprueba contra ellas antes de publicarse."
 
 ---
 
@@ -194,8 +194,8 @@ información"*, *"No espere más"*, *"Descubre cómo"*.
 - **H1 = the frontmatter `title`**, without a trailing period, matching the filename slug. The
   MDX body does not repeat it: the article page renders the title from the frontmatter.
 - **`excerpt`**: one sentence, full stop included, no product name, states the piece's criterion.
-  Follow the existing pattern: *"Roles, publicación controlada y validación continua para mantener
-  una base clínica auditable."*
+  Follow the pattern of the blog's former placeholder excerpts: *"Roles, publicación controlada
+  y validación continua para mantener una base clínica auditable."*
 - **Heading depth**: H2 for sections, H3 for subsections. H4 only in **marco** and **evidencia**,
   and never more than twice per piece. The seed post goes to H4 (`#### Señales de alerta`)
   which is acceptable there but not a default.

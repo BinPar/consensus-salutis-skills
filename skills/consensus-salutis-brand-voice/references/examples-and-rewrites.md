@@ -1,71 +1,91 @@
 # Examples and Rewrites
 
-Every "before" on this page is real copy from `consensus-salutis-website`. The point is not that
-the existing copy is bad. Most of it is on-brand, and several fragments are quoted elsewhere in
-this skill as models. The point is to show the four or five failure modes that recur, on material
-the team recognises.
+Every "before" not marked as a draft is real copy from `consensus-salutis-website`, current at
+`70613ae` (2026-10-16) unless marked *former* (pages deleted in `79663ea`; quoted as at
+`2449496`). The
+point is not that the existing copy is bad. Most of it is on-brand, and several fragments are
+quoted elsewhere in this skill as models. The point is to show the four or five failure modes
+that recur, on material the team recognises. §12 lists the current site copy that breaks a rule
+of this skill: known debt, never a model.
 
 ---
 
 ## 1. Noun stacking with no operational anchor
 
-**Before**, `src/app/plataforma/page.tsx`, hero body:
+**Before**, `src/app/_components/volume-section.tsx`, volume band intro:
 
-> "Consensus Salutis transforma corpus médico, guías clínicas y documentación propia en una capa
-> de consulta institucional con referencias, roles y procesos de validación."
+> "Una base médica estructurada que incorpora las guías y protocolos de cada organización, con
+> evaluación continua y validación clínica."
 
-**Diagnosis:** MEDIUM. Nothing false, nothing checkable. Four institutional nouns
-(*capa*, *referencias*, *roles*, *procesos*) and no role, document, decision or failure mode.
-Three `de` phrases carrying the meaning.
+**Diagnosis:** MEDIUM. Nothing false, nothing checkable. Two nominalisations (*evaluación
+continua*, *validación clínica*) hide who evaluates, against what, and who validates. No role, no
+decision, no failure mode.
 
 **After:**
 
-> "Consensus Salutis convierte guías, protocolos y documentación propia en una consulta que la
-> organización gobierna: un editor carga el contenido, un supervisor clínico lo valida y cada
-> respuesta posterior puede enlazar al epígrafe que la sustenta."
+> "Una base médica estructurada que incorpora las guías y protocolos de cada organización: un
+> editor revisa cada cambio antes de publicarlo, y las preguntas de control comprueban en cada
+> actualización que las respuestas críticas no se degradan."
 
-**What changed:** two roles, one document unit (*epígrafe*), one decision (*valida*), and the
-verbs do the work. Same register, same length.
+**What changed:** the two nominalisations became two operations with their subjects. One role
+(*editor*), one decision (*publicarlo*), one failure mode (*se degradan*) and a coined term
+(*preguntas de control*). Same register.
 
 ---
 
 ## 2. Trailing periods in titles
 
-**Before**, the post frontmatter and the page heroes:
+**Before**, the post frontmatter and the site's display headings:
 
 > "Cómo medir la fiabilidad de una respuesta clínica."
-> "Conocimiento clínico gobernado por IA."
-> "Un sistema operativo para el conocimiento clínico."
-> "Precisión medible sin perder trazabilidad clínica."
-> "Diseñado para operar donde la confianza no es decorativa."
+> "Respuestas clínicas trazables."
+> "Tres capacidades. Una sola arquitectura."
+> "El conocimiento avanza. La base se actualiza."
+> "De la consulta clínica a la evidencia."
 
-**Diagnosis:** LOW, but systematic: every H1 in the site carries a period no other heading level
-uses.
+**Diagnosis:** LOW, but systematic, and deliberate on the site: every display heading carries a
+period, and the two-line headings are two sentences. That is an observed exception on the site,
+not a rule of this voice.
 
-**After:** drop the period in all five. `excerpt` fields stay as they are: they are sentences and
-keep their full stop.
+**After:** drop the period in all five, and join the two-line headings with a comma: "Tres
+capacidades, una sola arquitectura". `excerpt` fields stay as they are: they are sentences and
+keep their full stop. Full list in `language-rules.md` §5.
 
 ---
 
 ## 3. Second person
 
-**Before**, `VerticalHome`, contact section:
+**Before**, `contact-assistant/contact-assistant.tsx` (the home's contact section and
+`/contacto`) and `platform-walkthrough.tsx`:
 
-> "Hablemos de tu organización sanitaria."
-> "Revisamos caso de uso, restricciones de seguridad, requisitos de integración y el nivel de
-> evidencia necesario."
+> "Hablemos de tu organización."
+> "¿Qué te gustaría explorar con BinPar?"
+> "Hemos recibido tu consulta. Nuestro equipo te responderá en …"
+> "Explora la interfaz, los paneles y tu área de usuario con una consulta de ejemplo."
+> "Exploremos cómo integrar tus guías, protocolos y corpus médico en un entorno de consulta
+> gobernado."
 
-**Diagnosis:** MEDIUM. *tu* plus *hablemos* plus *revisamos*. Second person and corporate first
-person in two lines. The second sentence is otherwise excellent: four concrete anchors, no filler.
+**Diagnosis:** MEDIUM (M4, M5). *tu*, *te*, *explora* plus *hablemos*, *nuestro equipo*,
+*exploremos*. The site uses *tú* throughout its conversational contact assistant and the
+platform page: an observed exception there, not a new rule. New copy stays impersonal.
 
 **After:**
 
 > "Una conversación sobre la organización sanitaria"
-> "La primera reunión revisa el caso de uso, las restricciones de seguridad, los requisitos de
-> integración y el nivel de evidencia necesario."
+> "Caso de uso o necesidad de la organización"
+> "Consulta recibida. La respuesta llegará a …"
+> "Una consulta de ejemplo recorre la interfaz, los paneles y el área de usuario."
+> "La primera reunión revisa cómo integrar las guías, los protocolos y el corpus médico de la
+> organización en un entorno de consulta gobernado."
+
+**Former model**, legacy `ContactPanel` (horizontal home only): *"Revisamos caso de uso,
+restricciones de seguridad, requisitos de integración y el nivel de evidencia necesario."* Four
+concrete anchors, no filler, one *revisamos* too many. Its rewrite is still the model: *"La
+primera reunión revisa el caso de uso, las restricciones de seguridad, los requisitos de
+integración y el nivel de evidencia necesario."*
 
 **Note:** contact and form sections are the hardest place to hold the impersonal narrator. The
-move is to make the *meeting* the subject, not the reader.
+move is to make the *meeting* or the *message* the subject, not the reader.
 
 ---
 
@@ -125,11 +145,18 @@ Clinical risk framing, not commercial fear. Exactly the distinction in `clinical
 
 ---
 
-## 6. Personification (a hazard, not a current defect)
+## 6. Personification (a hazard, and one current defect)
 
-The production copy is clean here. *"El sistema recupera"*, *"contrasta las fuentes
-recuperadas"*, *"sintetiza una respuesta operativa y enlaza el fragmento"* are all correct. The
-drift shows up in new drafts:
+Most of the production copy is clean here. Process steps 01 and 04 in
+`clinical-process-showcase.tsx` keep the human and the document as subjects: *"El profesional
+formula una duda clínica en lenguaje natural"*, *"La respuesta reúne la orientación clínica y
+permite consultar las fuentes que respaldan sus conclusiones"*. The former step copy (*"El
+sistema recupera"*, *"contrasta las fuentes recuperadas"*, *"sintetiza una respuesta operativa y
+enlaza el fragmento"*) survives only in the legacy horizontal home and is still a model.
+
+The current defect is the same showcase's committee scene: an *orquestador* that "construye una
+orientación conjunta" and experts quoted in the first person. It is listed in §12 and is never a
+model. The same drift shows up in new drafts:
 
 | Draft | Fixed |
 |---|---|
@@ -146,7 +173,7 @@ by who sets it.
 
 **Before** (a draft sentence of the kind that gets requested):
 
-> "Consensus Salutis reduce los errores de consulta y mejora la seguridad del paciente."
+> "BinPar reduce los errores de consulta y mejora la seguridad del paciente."
 
 **Diagnosis:** HIGH. Red line 2, twice. No study, and *seguridad del paciente* is a clinical
 outcome.
@@ -170,7 +197,8 @@ measured rather than something claimed.
 
 **Diagnosis:** HIGH. Red line 3. Two claimed conformities and an unqualified "certificada".
 
-**After**, following `src/app/seguridad/page.tsx`:
+**After**, adapted from the former security page (`src/app/seguridad/page.tsx`, deleted in
+`79663ea`):
 
 > "Plataforma diseñada desde el inicio para privacidad, auditoría y despliegue en la Unión
 > Europea. Las consultas no se usan para entrenar modelos globales, cada acción queda registrada y
@@ -204,7 +232,7 @@ measured rather than something claimed.
 
 **Before** (a draft opening):
 
-> "A diferencia de los chatbots genéricos, Consensus Salutis no inventa respuestas."
+> "A diferencia de los chatbots genéricos, BinPar no inventa respuestas."
 
 **Diagnosis:** MEDIUM (implicit competitor category, product in the opening) and it hands the
 reader the word *inventa* applied to a category the brand belongs to.
@@ -242,3 +270,42 @@ For a **mecanismo** piece on documentary traceability, ~180 words, no product, n
 **Why it works:** no product, no mechanism, three anchors (informe, comité, auditoría), the coined
 term *corpus vivo* defined in passing, clinical risk framing without commercial fear, and the last
 sentence sets up the piece's distinction.
+
+---
+
+## 12. Known debt in the current site copy
+
+Website `70613ae` (2026-10-16). The website copy is the tone of record for the name, the claims
+and the product vocabulary. Where it breaks a rule of this skill, the rule wins for new copy and
+the fragment is listed here. Never quote these fragments as models. In review mode, flag them
+with their codes like any other finding (the verdict follows the usual thresholds) and take the
+rewrite from this table.
+
+Decisions behind the table:
+
+- *comité clínico* and *comité de expertos* are allowed public lexicon, and the target for most
+  rewrites below (`language-rules.md` §2).
+- *agente*, *agentes expertos*, *orquestador*, *orquestado* and *sub-agente* stay banned in new
+  copy. *orquestador*, *agentes expertos* and *sub-agente* name components (H7); *agente*,
+  *orquestado* and *orquestación* are banned lexicon (M7).
+- *tú*, *nosotros* and trailing periods are observed exceptions on the site, not new rules.
+
+| # | Fragment (verbatim) | Where | Codes | Suggested rewrite |
+|---|---|---|---|---|
+| 1 | "El sistema selecciona los agentes expertos adecuados y consulta sus corpus médicos, adaptados a la organización y la especialidad." | process step 02, `clinical-process-showcase.tsx` | H7 | "El comité de expertos reúne las especialidades que la consulta necesita, y cada una se consulta sobre su propio corpus médico, adaptado a la organización." |
+| 2 | "El orquestador reúne las aportaciones de los expertos, contrasta sus matices y límites y construye una orientación conjunta para la consulta." | process step 03, same file; node label "Orquestador" in `clinical-process-visuals.tsx` | H7 | "La síntesis del comité reúne las aportaciones de cada especialidad, contrasta sus matices y límites y conserva la procedencia de cada una." Label: "Síntesis del comité" |
+| 3 | "Conocimiento clínico orquestado por IA." | home hero H2, `horizontal-home.tsx` (`HeroPanel`) | M7, L1 | "Conocimiento clínico consultable con IA, trazable hasta su fuente" |
+| 4 | "no asumiría que el edema es exclusivamente renal" | committee scene expert quote (`expertDetails`, `clinical-process-showcase.tsx`) | H6, H9 | Attribute to the specialty and its source, never an expert's first person: "Nefrología señala, con su fuente, el límite de atribuir el edema solo a la causa renal" |
+| 5 | "Paciente de 68 años con diabetes tipo 2, hipertensión y enfermedad renal crónica…" taken to "Revisar AINE, IECA/ARA-II y diuréticos por riesgo renal e hiperpotasemia." and "Evitar atribuir el edema solo a la ERC o asumir causalidad por ibuprofeno." | committee scene cards, `clinical-process-data.ts`, `clinical-process-showcase.tsx` | H1 | Keep the demo at question-and-document level: the cards name the cited epígrafe, not the action. "Epígrafe citado: AINE en insuficiencia renal" |
+| 6 | "El futuro de la salud. Ya está aquí." | casos H2, `success-cases/territorial-case-definitive-two.tsx` | M8, M9, M1, L1 | "IA médica que ya forma parte del sistema sanitario" (the section's own unrendered `casesIntro.title` in `success-cases-data.ts`, without the period; the organisations named on the map are its anchor) |
+| 7 | "BinPar la IA médica institucional que conecta guías, protocolos y corpus médico con la práctica clínica." | cover lede, `home-cover.tsx` | L11 | "BinPar es la IA médica institucional que conecta guías, protocolos y corpus médico con la práctica clínica." |
+| 8 | "Hablemos de tu organización.", "¿Cómo te llamas?", "Explora la interfaz…", "Exploremos cómo integrar tus guías…" | `contact-assistant/`, `platform-walkthrough.tsx` | M4, M5 | §3 |
+| 9 | "Estamos en Madrid." / "Escríbenos o consulta cómo llegar a nuestras oficinas." | `/contacto`, `contacto/_components/contact-details.tsx` | M5, M4, L1 | "Oficinas en Madrid" / "Dirección, correo de contacto y cómo llegar" |
+| 10 | "BINPAR / SISTEMA INTEGRADO" | architecture graphic SVG label, `product-strata/strata-rotatable-graphic.tsx` | M15 | Source string "BinPar / Sistema integrado" with CSS `uppercase` |
+| 11 | A trailing period on every display heading | whole site | L1 | §2 and `language-rules.md` §5 |
+
+**Rows 4 and 5:** the scenes replay a real captured consultation, so the answer text is product
+output, not marketing copy, and the answers themselves are outside this skill. The debt is the
+framing around them: an expert quoted in the first person, and cards that state what to do for a
+described patient. A demo that stays at the level of the question, the specialties consulted and
+the cited epígrafes makes the same point inside the red lines.

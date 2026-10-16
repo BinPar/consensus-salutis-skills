@@ -1,16 +1,23 @@
-# Consensus Salutis Skills
+# BinPar Skills (consensus-salutis-skills)
 
-Agent skills for [Claude Code](https://claude.com/claude-code) for the **Consensus Salutis** brand and platform.
+Agent skills for [Claude Code](https://claude.com/claude-code) for the **BinPar**
+brand and platform — the institutional medical AI platform formerly named
+Consensus Salutis.
+
+> Skill IDs, the plugin/marketplace name and this repo name keep the legacy
+> `consensus-salutis-` prefix on purpose; the product is BinPar. Renaming them
+> would break every installed copy (`skills-lock.json`, `.claude/skills`
+> symlinks, slash commands).
 
 ## Available skills
 
 | Skill | Description |
 |---|---|
-| [`consensus-salutis-brand-design-system`](skills/consensus-salutis-brand-design-system/SKILL.md) | Brand design system reference and enforcement guide: color palette and design tokens, typography (Sora + Plus Jakarta Sans), logo usage, light/dark theming, UI component recipes, the signature signal-field motion system, and landing/blog page patterns. Extracted from the brand identity manual and the production website. |
+| [`consensus-salutis-brand-design-system`](skills/consensus-salutis-brand-design-system/SKILL.md) | Brand design system reference and enforcement guide: color palette and design tokens, typography (Sora + Plus Jakarta Sans), the hexagonal BinPar logo and favicon, light/dark theming, UI component recipes, the signal-field motion system plus the brand-mark reveal and loader, and landing/blog page patterns. Extracted from the production website (and the original brand manual for the base palette). |
 | [`consensus-salutis-brand-voice`](skills/consensus-salutis-brand-voice/SKILL.md) | Brand voice and writing style guide: clinical sobriety, the four calibration dials, the impersonal-analytical narrator, the ban on personifying the AI, the coined lexicon, clinical and regulatory red lines, the public disclosure boundary, the five blog archetypes with word budgets, and an actionable review mode with severities. |
 
 Once installed, Claude automatically applies the design system skill whenever a
-task touches Consensus Salutis visual design (building UI, generating CSS/tokens,
+task touches BinPar product visual design (building UI, generating CSS/tokens,
 creating marketing assets, reviewing brand compliance) and the brand voice skill
 whenever a task touches copy (writing or auditing blog MDX articles, website
 pages, proposals, decks, email).
@@ -90,7 +97,7 @@ In a Claude Code session:
 
 1. Run `/skills` (or check the available-skills list) — you should see
    `consensus-salutis-brand-design-system` and `consensus-salutis-brand-voice`.
-2. Ask something on-brand, e.g. *"Genera los tokens CSS de Consensus Salutis"* —
+2. Ask something on-brand, e.g. *"Genera los tokens CSS de BinPar"* —
    Claude should load the design system skill and answer with the exact `@theme`
    block, fonts, and light/dark rules.
 3. Ask for copy, e.g. *"Revisa este párrafo contra la voz de marca"* — Claude
@@ -113,20 +120,27 @@ skills/consensus-salutis-brand-design-system/
 ├── references/
 │   ├── colors-and-tokens.md        # Palette, Tailwind v4 @theme block, semantic maps
 │   ├── typography.md               # Sora + Plus Jakarta Sans, hierarchy, MDX recipe
-│   ├── logo-usage.md               # Logo philosophy, variants, favicon, partner logos
+│   ├── logo-usage.md               # BinPar mark/lockup, variants, sizes, favicon
 │   ├── light-dark-mode.md          # Theme architecture, toggle, boot script
-│   ├── ui-components.md            # Buttons, cards, header/footers, forms, chat mock
-│   ├── motion-system.md            # Grid bg, SignalField, reveals, counters
-│   ├── landing-patterns.md         # Canonical (vertical) home structure
+│   ├── ui-components.md            # Buttons, cards, header, contrast footer,
+│   │                               # section index, contact assistant, chat mock
+│   ├── motion-system.md            # Grid bg, SignalField, brand-mark reveal and
+│   │                               # loader, section index, scene players
+│   │                               # (counters are legacy)
+│   ├── landing-patterns.md         # Canonical (vertical) home: cover → … →
+│   │                               # contact assistant
 │   └── blog-patterns.md            # Article model, cards, index & article pages
 └── assets/
-    ├── logos/                      # consensus-{light,dark}.svg + isotipos
-    └── favicon/                    # Canonical favicon.svg + favicon.ico
+    ├── logos/                      # binpar-logo-{light,dark}.svg +
+    │                               # binpar-isotipo-{light,dark}.svg
+    └── favicon/                    # Canonical favicon.svg + real favicon.ico
 ```
 
-Sources of truth: the brand identity manual (PDF) and the production
-implementation in the `consensus-salutis-website` repository. When the website
-changes (tokens, components, motion), update the references here to match.
+Sources of truth: the production implementation in the
+`consensus-salutis-website` repository (logos from `public/logos/binpar-brand/`)
+and, for the base palette only, the original brand identity manual (PDF). When
+the website changes (tokens, components, motion), update the references here
+to match.
 
 ### `consensus-salutis-brand-voice`
 
@@ -148,10 +162,13 @@ skills/consensus-salutis-brand-voice/
 ```
 
 Sources of truth: the brand identity manual, the production copy in
-`consensus-salutis-website` (`src/app/plataforma`, `src/app/evidencia`,
-`src/app/seguridad`, `VerticalHome`), and the functional documents in
-`consensus-salutis` (background only — they are subject to the skill's own
-disclosure boundary). The website copy is the tone of record.
+`consensus-salutis-website` (`home-cover.tsx`, `horizontal-home.tsx`
+→ `VerticalHome`/`HeroPanel`, `clinical-process-showcase.tsx`,
+`product-strata/`, `volume-section.tsx`, `success-cases/success-cases-data.ts`,
+`contact-assistant/`, `platform-walkthrough.tsx`, and the blog posts), and the
+functional documents in `consensus-salutis` (background only — they are
+subject to the skill's own disclosure boundary). The website copy is the tone
+of record.
 
 ---
 

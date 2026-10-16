@@ -4,13 +4,13 @@
     "name": "BinPar"
   },
   "metadata": {
-    "description": "Consensus Salutis agent skills for Claude Code",
-    "version": "1.0.0"
+    "description": "BinPar (formerly Consensus Salutis) agent skills for Claude Code",
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "consensus-salutis-skills",
-      "description": "Consensus Salutis agent skills collection",
+      "description": "BinPar agent skills collection",
       "source": "./",
       "strict": false,
       "skills": [

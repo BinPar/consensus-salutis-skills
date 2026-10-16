@@ -1,135 +1,234 @@
 # Landing Patterns (Home)
 
-> Source: `src/app/_components/horizontal-home.tsx`, `site.tsx`, `page.tsx`.
+> Source: `src/app/page.tsx`, `src/env.js`, `src/app/_components/horizontal-home.tsx`
+> (`VerticalHome`, `HeroPanel`, `MobileHome`), `site.tsx`, `home-cover.tsx`,
+> `home-paint-panel.tsx`, `section-navigation.tsx`,
+> `success-cases/*`, `clinical-process-showcase.tsx`,
+> `product-strata/*`, `volume-section.tsx`, `home-blog.css`,
+> `contact-assistant/*`, `contrast-footer.tsx`, `platform-walkthrough.tsx`,
+> `contacto/_components/*` (website HEAD `70613ae`).
 >
-> **The definitive home is the VERTICAL layout** (`VerticalHome`, selected with
-> `env.VERTICAL_HOME`). A horizontal rail variant (`HorizontalHome`) exists in
-> the codebase but is NOT the canonical pattern — don't base new work on it.
-> Both share the same panels; only the scroll axis differs.
+> **The definitive home is the VERTICAL layout** (`VerticalHome`), opened by
+> the brand cover (`HomeCover`). It renders only when `VERTICAL_HOME=true`;
+> the flag defaults to `"false"` (`src/env.js`), so a deployment without it
+> still serves the legacy horizontal rail. Build new work on the vertical
+> layout regardless. `HorizontalHome` is legacy — don't base new work on it.
 
 ## Canonical section order
 
-1. **Hero** — eyebrow "IA médica institucional" · H1 "Conocimiento clínico
-   gobernado por IA." · lede · CTA pair · **ClinicalChatMock** in the right
-   column. Grid `lg:grid-cols-[1.15fr_0.85fr] gap-12 items-center`.
-2. **Casos de éxito** — heading block left, success-case logo cards right
-   (same 1.15/0.85 grid).
-3. **Proceso de consulta** — 5 numbered milestones with animated connectors
-   ("De la pregunta a la evidencia.").
-4. **Producto / Arquitectura** — 3 product pillars (BinPar · AWS · Editorial
-   Médica Panamericana): logo, bordered uppercase role label, body.
-5. **Métricas (KPIs operativos)** — intro + 4 animated metric cards
-   (+3 TB, +8.327, +30.000, <24h).
-6. **Blog (Lecturas clínicas)** — heading + "Ver todos" pill + latest 4
-   article cards.
-7. **Contacto (Siguiente paso)** — heading block + ContactForm panel, grid
-   `lg:grid-cols-[0.85fr_1.15fr]`.
+| # | Anchor | Section | Content |
+|---|--------|---------|---------|
+| 0 | — | **Cover** (`HomeCover`) | `.home-entry`, `min-height: 100svh`: app-icon tile with the traced isotipo → H1 "BinPar" + accent line "Respuestas clínicas trazables." → lede → single CTA "Descubrir la plataforma" (scrolls to #1) |
+| 1 | `#home-introduction` | **Presentación** (`HeroPanel presentation="section"`) | Eyebrow "IA médica institucional" · **H2** "Conocimiento clínico orquestado por IA." (current site copy; known voice debt, M7: don't reuse, see `consensus-salutis-brand-voice`) · lede · CTA pair · `ClinicalChatMock` right (`lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-12`) · `IntroductionBottomFade` |
+| 2 | `#casos-de-exito` | **Casos de éxito** (`SuccessCasesSection`) | Eyebrow "Casos de éxito" · H2 "El futuro de la salud. / Ya está aquí." (2nd line accent; known voice debt, M8/M9: don't reuse) · lede · numbered case pills · territorial map of Spain with floating case cards (Axia → Catalunya, SERMAS → Madrid) |
+| 3 | `#proceso` | **Cómo funciona** (`ClinicalProcessShowcase`) | `sr-only` H2 "De la pregunta a la evidencia." · five-stage process player |
+| 4 | `#arquitectura` | **Arquitectura** (`ProductStrataSection`) | Centered H2 "Tres capacidades. / Una sola arquitectura." (no eyebrow) · rotatable 3-layer graphic · three pillars: BinPar "Producto e ingeniería", Editorial Médica Panamericana "Conocimiento clínico", AWS "Infraestructura resiliente" |
+| 5 | `#conocimiento` | **Volumen** (`VolumeSection palette="original"`) | Navy **contrast band** in both themes · eyebrow "Volumen y actualización" · typewriter H2 · four STATIC figures (+3 TB, +8.327, +30.000, <24 h) |
+| 6 | `#lecturas` | **Blog** (`BlogPanel`) | Only when posts exist ("mejor un panel menos que un panel vacío") · `.home-blog-surface` |
+| 7 | `#contacto` | **Contacto** (`ContactAssistant`) | Traced isotipo · eyebrow "Contacto" · H2 "Hablemos de tu organización." (second person: known voice debt, M4/M5) · conversational three-step form |
+| — | — | **Footer** | `VerticalFooter` = `<ContrastFooter palette="original" />` |
+
+Section index (`homeSections`): Presentación · Casos de éxito · Cómo funciona
+· Arquitectura · Blog (the blog entry drops with the panel). The cover,
+volume band and contact are not indexed.
 
 ## Page shell (vertical home)
 
 ```tsx
-<HomeShell vertical>          // relative isolate bg-[#fbfdff] dark:bg-[#06111f] min-h-screen
-  <HomeMotionBackground />    // fixed grid layer (z-0)
-  <SiteHeader />              // fixed, h-16
-  <VerticalHome />
-  <VerticalFooter />          // full footer (NOT the slim band)
+<HomeShell vertical>            // relative isolate bg-[#fbfdff] dark:bg-[#06111f] min-h-screen
+  <HomeMotionBackground />      // fixed bg + <HomeGrid home /> (z-0)
+  <SiteHeader deferUntilCover /> // hidden until binpar:home-cover-ready
+  <VerticalHome posts={posts}>
+    <SectionNavigation sections={sections} deferUntilContent />
+    <main className="section-navigation-layout relative z-10 hidden lg:block">
+      <div className="relative [clip-path:inset(0)]">   {/* clip group */}
+        <FixedSignalLayer />
+        <HomeCover targetId="home-introduction" />
+        {/* HomePaintPanel → HeroPanel · Casos · <section id="proceso"> */}
+      </div>
+      {/* #arquitectura · #conocimiento · #lecturas · #contacto */}
+    </main>
+    <MobileHome posts={posts} withCover />  {/* lg:hidden */}
+  </VerticalHome>
+  <VerticalFooter />            // ContrastFooter palette="original"
 </HomeShell>
 ```
 
 ## Panel mechanics (vertical)
 
-- Each section is a `VerticalPanel` — a render-prop wrapper that computes its
-  own scroll visibility (activation line at 85% of the viewport height,
-  reversible on scroll-up) and passes `visible` down to `Reveal` children.
-- Panel layout: `px-10 py-20` (hero: `flex min-h-[calc(100svh)] items-center`),
-  content constrained to `mx-auto w-full max-w-7xl`, `relative z-10`.
-- The first three panels (Hero, Casos, Proceso) are wrapped in a
-  `relative [clip-path:inset(0)]` group containing `FixedSignalLayer` — a
-  fixed, full-viewport `SignalField intensity="hero" opacity={0.72}` that
-  stays pinned behind them while scrolling and clips at the group edge.
-- `ProductSignalLeft` blob anchors the hero: `fixed -bottom-80 -left-155 w-250
-  rotate-20`.
-- Reveal cadence inside each panel: eyebrow (0) → H2 (0.1) → paragraph (0.2)
-  → content grid (0.3+ or staggered children). See `motion-system.md`.
+- Each section is wrapped in **`HomePaintPanel`** (imported as `VerticalPanel`):
+  a render-prop wrapper that paints its section when it crosses **85% of the
+  viewport** while scrolling down (or ≥5% visible) and un-paints on scroll-up
+  past the line; it passes `visible` down. Casos and Arquitectura also wait
+  for 20% of their content (max 160px) past the line.
+- `Panel` layout: natural `px-10 py-18` (viewport height: `flex
+  min-h-[calc(100svh)] items-center px-10 py-20`), content `relative z-10
+  mx-auto w-full max-w-7xl`, plus `section-navigation-inset`.
+- Index registration: every indexed section has `id` + `tabIndex={-1}` +
+  `.section-navigation-region` (wrapper) or `data-section-anchor` (section),
+  `scroll-margin-top: 96px`. From 1280px, bands pad `80px` left / `208px`
+  right (contrast band `40px / 168px`) to clear the index.
+- The **clip group** (Cover + Presentación + Casos + Proceso) holds
+  `FixedSignalLayer` — `pointer-events-none fixed inset-0 -right-50 z-0` with
+  `SignalField className="-top-48 h-[calc(100%+12rem)]" intensity="hero"
+  opacity={0.72}` — pinned behind those sections and clipped at the group
+  edge.
+- `ProductSignalLeft` anchors the Presentación section: `fixed -bottom-80
+  -left-155 w-250 rotate-20`.
+- Reveal cadence inside a section: eyebrow (0) → H2 (0.1) → paragraph (0.2)
+  → content (0.3) → side media (0.4). See `motion-system.md`.
 
-## Section backgrounds (alternating rhythm)
+## Section surfaces (masked blends + one contrast band)
 
-| Panel | Background |
-|-------|-----------|
-| Hero | transparent over grid + signal layers |
-| Casos de éxito | `bg-white dark:bg-transparent dark:bg-linear-to-br dark:from-[#030916]/80 dark:to-[#030916]/40` |
-| Proceso | `bg-linear-to-br from-[#deedf3]/90 to-[#edf6f9]/30 dark:from-[#030916]/70 dark:to-[#030916]/30` |
-| Producto | `bg-white dark:bg-transparent` |
-| Métricas | gradient band (like Proceso, `/80` start) |
-| Blog | `bg-white dark:bg-transparent` |
-| Contacto | `bg-[#deedf3]/82 dark:bg-[#030916]/82` + `ProductSignalAccent` blob top-left |
+Light sections no longer alternate hard-edged bands: each surface is masked
+so it dissolves into the next (`success-cases/success-cases-surfaces.tsx`).
 
-`ThemeSection` variants (`plain`/`panel`/`deep`/`transparent`, `py-20`,
-`border-y border-cyan-800/10`) provide the same rhythm on mobile and subpages.
+| Section | Surface |
+|---------|---------|
+| Cover | transparent over grid + signal layers |
+| Presentación | transparent; `IntroductionBottomFade` at the bottom: `bg-white dark:bg-transparent dark:bg-linear-to-br dark:from-[#030916]/80 dark:to-[#030916]/40`, height `clamp(320px, 48vw, 560px)`, mask built from squared stops |
+| Casos de éxito | `CasesBackground`: same white / navy gradient, masked in from the top (`transparent → black clamp(64px, 10vw, 144px)`) |
+| Proceso | `ProcessBackground`: `bg-linear-to-br from-[#deedf3]/90 to-[#edf6f9]/30 dark:from-[#030916]/70 dark:to-[#030916]/30` masked with `surfaceMask` (11 stops `[0, .028, .104, .216, .352, .5, .648, .784, .896, .972, 1]`, depth `clamp(112px, 18vw, 280px)`), the cases surface continuing on top, and a fade to the product white at the bottom (`clamp(160px, 18vw, 280px)`) |
+| Arquitectura | `bg-white dark:bg-[#06111f]` |
+| Volumen | **contrast band** `radial-gradient(ellipse at 90% 90%, rgb(0 109 121 / 22%), transparent 60%), #081827`, both themes, `data-section-navigation-surface="dark"` |
+| Blog | `.home-blog-surface`: white with a 128px bottom fade (96px below 640px); transparent in dark |
+| Contacto | transparent + the assistant's radial halo |
+| Footer | contrast band again (`ContrastFooter`) |
 
-## Mobile home (`MobileHome`, `lg:hidden`)
+`ThemeSection` variants (`plain`/`panel`/`deep`/`transparent`, `py-20`, or
+`py-14 sm:py-18` with `compact`) still provide the rhythm on mobile and
+subpages.
 
-Single vertical flow with the same order, but the chat mock moves BELOW the
-hero copy (compact variant) and CTAs after it. Sections use `ThemeSection`
-with `px-5 sm:px-10`; type scales down (H1 `text-4xl sm:text-5xl`, H2
-`text-3xl sm:text-4xl`, ledes `text-base leading-7`). Reveals switch to
-`ViewportReveal`/`usePassedViewport`. A fixed `SignalField` +
-`ProductSignalLeft` still back the first group.
+## Mobile home (`MobileHome withCover`, `lg:hidden`)
+
+Same order, cover first. Fixed `SignalField` + `ProductSignalLeft` (`-left-200
+sm:-left-155`) back the first group; the compact chat mock sits BELOW the
+presentation copy; sections use `px-5 sm:px-10`; type scales down (H2
+`text-3xl sm:text-4xl`, ledes `text-base leading-7`); reveals use
+`ViewportReveal` / `usePassedViewport` (activation at 1.12× / 0.85× the
+viewport). No section index on mobile.
 
 ## Content blocks
 
-### Success case card
+### Cover (`home-cover.tsx` / `.css`)
 
-`rounded-2xl border border-cyan-800/15 bg-white/70 px-5 py-3 shadow-big-blocks
-backdrop-blur-xs dark:bg-[#152230e6]/90` — centered logo (`h-14` box,
-`max-h-11` logo, dark handled via white variant or `dark:brightness-0
-dark:invert`) + org name `font-display text-xs font-semibold tracking-[0.13em]
-uppercase text-primary-light dark:text-primary-dark`. Stagger 0.18s.
+`padding: 128px 32px 112px` (mobile `112px 24px 80px`), content `max-width:
+850px`, centered. Tile (`logo-usage.md` → App-icon tile) → H1 (54/48/36px,
+accent line 40px) → lede `text-lg leading-8 text-slate-600
+dark:text-slate-400`, `max-width: 560px`, `margin-top: 28px` → cover CTA
+(`ui-components.md`). Entrance: `motion-system.md` → Brand-intro
+choreography. The header and section index stay hidden until it completes.
 
-### Product pillar
+### Casos de éxito (territorial map)
 
-No card chrome — open composition: logo (`h-10`–`h-12` box, inverted in dark)
-→ role label `border-b border-primary-light pt-4 pb-3 font-display text-xs
-font-semibold tracking-[0.13em]–[0.18em] uppercase text-primary-light
-dark:border-cyan-300/20 dark:text-primary-dark` → body `text-sm leading-6
-text-slate-600 dark:text-slate-400`. Grid `md:grid-cols-3 lg:gap-10`,
-stagger 0.24s.
+Grid `lg:grid-cols-[.82fr_1.18fr] gap-10 lg:gap-12`. Left: eyebrow, two-line
+H2 (accent second line), lede `text-lg leading-8`, numbered pills (`min-h-10
+rounded-full border px-4 text-xs font-semibold`; selected = filled primary,
+white / `#06111f` text; index at `opacity-60`). Right: hand-drawn SVG map in
+`currentColor` primary with gradient land, grid, glow and pin ripples; case
+cards (`rounded-xl bg-white/95 dark:bg-[#102330]/95`, partner logo, dark
+variant or `dark:brightness-0 dark:invert`) anchored to their regions, gently
+repelling each other, draggable. Data model: `success-cases-data.ts` — the map
+pin is optional, so adding a case never requires artwork.
 
-### Clinical process (5 steps)
+### Proceso (process player)
 
-Desktop: 3-column grid, 2 rows (`col-start`/`row-start` placement 1-2-3 top,
-4-5 bottom); connector lines after steps 01, 02 and 04 (`border-t
-border-primary-light`, `w-[calc(100%+3.5rem)]`, animated scaleX). Mobile:
-vertical timeline `grid-cols-[4.5rem_1fr]` with animated vertical connector.
-Node/typography spec in `ui-components.md`; delays in `motion-system.md`.
+Five stages — 01 "Plantear la consulta", 02 "Consultar el conocimiento", 03
+"Contrastar las aportaciones", 04 "Fuentes verificables", 05 "Revisar y
+profundizar" — each with a signal label. Layout and controls in
+`ui-components.md` → Process player; clock and gating in `motion-system.md`.
 
-### Metrics
+### Arquitectura (strata)
 
-`grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 lg:gap-8` of glass metric
-cards with count-up values (see `motion-system.md`). Intro heading pattern:
-eyebrow "KPIs operativos" + H2 + explanatory lede.
+Centered two-line H2 + lede "Un producto sólido se construye en profundidad.
+Tres capas complementarias sostienen la misma experiencia clínica." Graphic
+(`aspect-[650/410]`, max 640px) beside the pillar detail; micro-label "Capa 0N
+/ 03" (`text-[10px] font-semibold uppercase tracking-[.19em]`). Pillar logos:
+BinPar pair `h-7` (large `h-10`), EMP and AWS inverted in dark. Proof lines:
+"+15 años de software sanitario", "+70 años de experiencia editorial",
+"Continuidad y capacidad de escala".
 
-### Hero copy rules
+### Volume band (contrast band)
 
-- H1 states the value proposition in one sentence ending with a period.
-- Lede: 2 sentences max, `max-w-2xl`, mentions "guías, protocolos y corpus
-  médico" → "respuestas trazables".
-- Eyebrow is category positioning, not marketing ("IA médica institucional").
+`min-height: 420px`, `padding-block: 64px` (56px mobile), container
+`calc(100% - 80px)` max 1280px, two columns (`gap: 72px`; one column
+≤767px). Left: eyebrow (Sora 12px 700 `0.22em`, `#00bcbb`) → typewriter H2
+"El conocimiento avanza. / La base se actualiza." (`#f8fafc`) → intro 18px/32px
+`#b5c4d2`. Right: 2×2 tiles (`border-radius: 18px; padding: 16px 20px;
+background: rgb(0 188 187 / 5%); border: 1px solid rgb(0 188 187 / 22%)`),
+value Sora 38px 700 tabular-nums `#f8fafc`, label 14px/22px `#b5c4d2`.
+Figures are static — count-ups are legacy.
 
-## Subpage hero (`PageHero`)
+### Blog
 
-For non-home pages: bordered section on `bg-[#fbfdff] dark:bg-[#06111f]` with
-a diagonal cyan/teal gradient wash + 40px grid overlay + `SignalField
-intensity="hero"`; content `max-w-7xl px-5 py-20 lg:py-24`: Eyebrow → H1
-`text-4xl sm:text-5xl` → lede `max-w-3xl`. Blog list/article pages use the
-simpler recipe: fixed SignalField layer + `ProductSignalLeft` + content
-starting at `pt-32 lg:pt-36` (clearing the fixed header).
+Eyebrow "Lecturas clínicas" → H2 "Últimos artículos" → lede → "Ver todos"
+pill; latest 4 cards (`blog-patterns.md`).
 
-## Horizontal home (legacy/optional)
+### Contacto
 
-Kept behind `env.VERTICAL_HOME=false`: a `lg:h-screen lg:overflow-hidden`
-shell whose wheel events translate to horizontal rail scroll (`w-screen`
-panels, keyboard PageUp/Down/Home/End support), a bottom progress bar
-(spring scaleX, panel name label) and the slim `HomeFooterBand`. Panels reveal
-at 35% horizontal visibility. Mobile falls back to `MobileHome`. Reuse only if
-explicitly asked for the horizontal experience.
+`ContactAssistant` (`ui-components.md` → Contact assistant). No side copy, no
+form panel: the assistant is the whole section.
+
+### Copy rules (cover + presentation)
+
+- Cover H1 is the product name only ("BinPar"); the accent line states the
+  value in a short phrase; the lede says what it is and what it connects
+  ("guías, protocolos y corpus médico" → "práctica clínica"); ONE exploratory
+  CTA.
+- Presentación: eyebrow is category positioning, not marketing ("IA médica
+  institucional"); H2 one sentence; lede ≤2 sentences, `max-w-2xl`, mentions
+  "guías, protocolos y corpus médico" → "respuestas trazables"; CTA pair.
+- Wording is the brand-voice skill's call. Some current site copy is recorded
+  there as known debt (e.g. "orquestado por IA", "agentes expertos",
+  "orquestador" in the process scenes, "El futuro de la salud. Ya está aquí.",
+  *tú*/*nosotros* in the contact assistant, "Estamos en Madrid.", trailing
+  periods on display headings) — quote it when describing the site, never
+  reuse it as a model. *comité clínico* / *comité de expertos* are allowed
+  public lexicon. The cover lede at HEAD is also missing its verb ("BinPar la
+  IA médica institucional que…").
+
+## Subpages (`/plataforma`, `/contacto`)
+
+Same family as the home, without the cover:
+
+- `PageShell` (normal header + contrast footer) around a
+  `section-navigation-layout` surface `bg-[#fbfdff] dark:bg-[#06111f]` with
+  `HomeMotionBackground` + `SectionNavigation` (own section list) +
+  `HomePaintPanel` sections; the first section clips (`[clip-path:inset(0)]`)
+  a fixed `SignalField` (`intensity="hero"`) + `ProductSignalLeft` (`fixed
+  -bottom-80 -left-200 w-250 rotate-20 sm:-left-155`).
+- `/plataforma` (`PlatformWalkthrough`): first section `pt-36 sm:pt-44`,
+  centered two-line H1 "De la consulta clínica / a la evidencia." (accent
+  second line) + lede, then the interactive product replica
+  (`platform-preview/*`, frame aspect 1440/724, radius 20px), then five stage
+  sections (01–05) with looping scenes on alternating white-masked bands, then
+  a closing CTA block (eyebrow "Siguiente paso" → H2 → lede → "Solicitar una
+  demostración"). Index: La plataforma · Consulta · Contraste · Fuentes ·
+  Seguimiento.
+- `/contacto` (`ContactPageContent`): `#hablemos` = `ContactAssistant
+  layout="page"` over the hero signal; `#donde-estamos` = `ContactDetails` band
+  (`bg-[#e8f2f7]/80 dark:bg-[#081827]/80`, `lg:grid-cols-2`): eyebrow "Dónde
+  encontrarnos", H2 "Estamos en Madrid." (known voice debt), lede, address list with 20px lucide
+  icons; right, a MapLibre map in brand colors whose marker is the isotipo
+  beacon (`motion-system.md` → Beacon ripple). Index: Hablemos · Dónde
+  estamos.
+- Blog list/article pages keep the simpler recipe: fixed SignalField +
+  `ProductSignalLeft` + content from `pt-32 lg:pt-36` (`blog-patterns.md`).
+- `PageHero` (bordered hero with diagonal wash + 40px grid) is unused at HEAD.
+
+**Deleted routes**: `/casos`, `/evidencia` and `/seguridad` were removed in
+website `79663ea` with no redirects (they 404). Don't link to them or rebuild
+them from old copy. `/casos-lab` is a private, noindex lab route: never cite or
+ship its variants (`palette="teal"`, particle entrance, alternative cards) as
+production patterns.
+
+## Horizontal home (legacy)
+
+Kept behind `VERTICAL_HOME=false`: a `lg:h-screen lg:overflow-hidden` shell
+whose wheel events translate to horizontal rail scroll (`w-screen` panels,
+keyboard PageUp/Down/Home/End support), a bottom progress bar (spring scaleX,
+panel name label) and the slim `HomeFooterBand`. Panels reveal at 35%
+horizontal visibility; no cover, no section index. It is now the only
+consumer of the count-up metrics (`MetricsPanel`), the numbered milestones
+(`ClinicalProcess`) and `ContactPanel` / `ContactForm`.
+Reuse only if explicitly asked for the horizontal experience.

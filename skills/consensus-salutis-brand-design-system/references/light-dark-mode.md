@@ -1,7 +1,8 @@
 # Light / Dark Mode
 
 > Source: `src/app/layout.tsx`, `src/app/_components/theme-toggle.tsx`,
-> `src/styles/globals.css`.
+> `src/styles/globals.css` (unchanged by the BinPar rebrand),
+> `volume-section.tsx`, `contrast-footer.tsx`, `section-navigation.css`.
 
 The system ships BOTH themes with a user toggle. Light is the default; dark is
 opt-in and persisted. Every component must style both modes from day one — the
@@ -13,6 +14,8 @@ codebase pairs classes inline (`x dark:y`) everywhere.
   `@custom-variant dark (&:where(.dark, .dark *));` — the `dark` class on
   `<html>` drives everything.
 - **Persistence**: `localStorage` key **`consensus-theme`** (`"dark"` | `"light"`).
+  Legacy key kept on purpose after the BinPar rename: renaming it would reset
+  every user's saved theme, and the product apps share it. Never rename it.
 - **No-flash boot script** (inline in `<head>`, before paint):
 
 ```html
@@ -95,7 +98,9 @@ text in light; `#04111e` inset + slate-100 in dark).
 | Primary accent | `#006d79` (hover `cyan-800`) | `#00BCBB` (hover `#71fffe`) |
 | Primary button text | white | `#03111d`/`#04111e` |
 | Yellow contrast accent | `#ffd230` + `#06111f` text | `#f6ff53` + `#06111f` text |
-| Logo | `consensus-light.svg` | `consensus-dark.svg` |
+| Logo | `binpar-logo-light.svg` | `binpar-logo-dark.svg` |
+| Contrast band (volume, footer) | `#081827` + teal radial, `-dark` logo | identical (theme-fixed) |
+| Muted text in custom CSS | `#64748b` / `#475569` | `#a9bacb` |
 | Grid lines | `rgba(8,145,178,0.1)` | `rgba(125,211,252,0.045)` |
 | Decorative blob fills | cyan/teal/lime, alphas ~0.1–0.34 | turquoise/teal/sky, lower alphas |
 | Backdrop blur | `backdrop-blur-xs` on cards | often `backdrop-blur-sm` (denser) |
@@ -112,4 +117,16 @@ text in light; `#04111e` inset + slate-100 in dark).
 - Web/app: both modes, toggle in header, light default.
 - Print, email, documents: light version only.
 - The clinical chat mock, forms and marketing assets must be produced in the
-  active theme's palette — no fixed-theme components.
+  active theme's palette — no fixed-theme components, with ONE exception:
+- **Contrast bands are deliberately theme-fixed.** `VolumeSection` and
+  `ContrastFooter` with `palette="original"` render the same navy band
+  (`radial-gradient(ellipse at 90% 90%, rgb(0 109 121 / 22%), transparent 60%),
+  #081827`) in light AND dark, with `#f8fafc` headings, `#b5c4d2` body and
+  `#00bcbb` accent. Mark any such band the fixed overlays can cross with
+  `data-section-navigation-surface="dark"` so they (section index, LinkedIn
+  rail) switch to their contrast clone over it. At HEAD only the volume band
+  sets it (`volume-section.tsx:84-86`); `ContrastFooter` does not. Put only
+  the `-dark` logo on these bands. The site uses them only for the volume (KPI) band and
+  the footer; keep them that rare — everything else follows the theme.
+- A self-themed product replica (own `data-theme` switch, `--pp-*` tokens, as
+  on `/plataforma`) follows its own switch, not the page's.

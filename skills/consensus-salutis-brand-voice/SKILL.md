@@ -1,40 +1,68 @@
 ---
 name: consensus-salutis-brand-voice
 description: >
-  Consensus Salutis brand voice and writing style guide. Provides the tone identity (clinical
-  sobriety), the four calibration dials, the impersonal-analytical narrator, the ban on
+  BinPar (formerly Consensus Salutis) brand voice and writing style guide for the BinPar
+  institutional medical AI platform. Provides the tone identity (clinical sobriety), the four
+  calibration dials, the impersonal-analytical narrator, the product naming rules, the ban on
   personifying the AI, the coined lexicon, clinical and regulatory red lines, the public
   disclosure boundary, the five blog archetypes with word budgets, and an actionable review
-  mode with severities. Use when writing, reviewing, editing or auditing any Consensus Salutis
-  copy: blog MDX articles, website pages, proposals, decks, email, product notes. Also use when
-  checking existing copy for voice compliance. Sister skill to
+  mode with severities. Use when writing, reviewing, editing or auditing any copy for the BinPar
+  clinical AI platform: blog MDX articles, website pages, proposals, decks, email, product
+  notes. Also use when checking existing copy for voice compliance. Sister skill to
   consensus-salutis-brand-design-system: that one says how the brand looks, this one says how
   it talks.
 ---
 
-# Consensus Salutis Brand Voice
+# BinPar Brand Voice
+
+> The product was named **Consensus Salutis** until the website rename (`05d5437`, 2026-10-06).
+> The skill ID keeps the legacy `consensus-salutis-` prefix on purpose; the name in copy is
+> **BinPar**.
 
 ## Identity: clinical sobriety
 
-**Consensus Salutis** turns clinical guidelines, protocols and medical corpus into traceable
-answers for healthcare organisations (a BinPar initiative with Editorial Médica Panamericana
-and AWS). The copy has to earn the trust that a hospital procurement committee demands.
+**BinPar** turns clinical guidelines, protocols and medical corpus into traceable answers for
+healthcare organisations. Three capabilities stand behind it: BinPar (product and engineering),
+Editorial Médica Panamericana (clinical knowledge) and AWS (resilient infrastructure). The copy
+has to earn the trust that a hospital procurement committee demands.
 
 The reference is **not a SaaS blog**. It is the editorial of a medical journal, or the preamble
 of a clinical guideline. Authority comes from precision, never from enthusiasm.
 
-Where the sister brand A2R sells *inspired possibility*, Consensus Salutis sells
-**defensibility**: the reader should close the piece thinking *«esto lo puedo sostener delante
-de un comité»*. Anything that does not serve that is cut.
+Where the sister brand A2R sells *inspired possibility*, BinPar sells **defensibility**: the
+reader should close the piece thinking *«esto lo puedo sostener delante de un comité»*. Anything
+that does not serve that is cut.
 
-> Sources: the brand identity manual, the production copy in **consensus-salutis-website**
-> (`src/app/plataforma`, `src/app/evidencia`, `src/app/seguridad`, `horizontal-home.tsx`
-> → `VerticalHome`), and the functional documents in **consensus-salutis** (`docs/`).
-> The website copy is the tone of record; the functional docs are background only and are
-> subject to the disclosure boundary in §6.
+> Sources: the production copy in **consensus-salutis-website** at `70613ae` (`home-cover.tsx`,
+> `horizontal-home.tsx` → `VerticalHome`/`HeroPanel`, `clinical-process-showcase.tsx`,
+> `success-cases/`, `product-strata/`, `volume-section.tsx`, `contact-assistant/`,
+> `platform-walkthrough.tsx`, `contrast-footer.tsx`, the blog in `src/content/blog/`), the brand
+> identity manual (Consensus Salutis era), and the functional documents in **consensus-salutis**
+> (`docs/`). The website copy is the tone of record; the functional docs are background only and
+> are subject to the disclosure boundary (`references/clinical-red-lines.md` §6). Where the site
+> breaks a rule of this skill, the rule wins for new copy and the fragment is recorded as known
+> debt (`references/examples-and-rewrites.md` §12).
 
 **Language:** all customer-facing copy is **Spanish (es-ES)**. This skill is written in English;
 every quoted string, example and rewrite stays in Spanish.
+
+---
+
+## Naming
+
+| Rule | Detail |
+|---|---|
+| **Spelling** | **BinPar**: one word, capital B and P, in prose, `alt`, `aria-label`, metadata and email subjects. Never "Binpar", "BINPAR" typed, "Bin Par", "binPar" |
+| **All caps** | Only through CSS `uppercase` on eyebrows and micro-labels; the source string stays "BinPar" |
+| **Separator** | " · " between the name and a qualifier: "BinPar · Lecturas clínicas", "BinPar · Inicio". `<title>` follows each surface's template (website `%s \| BinPar`; product apps "BinPar — Chat" (es, en), "BinPar — Xat" (ca), "BinPar — Editor") |
+| **Possessive** | "de BinPar": "Lecturas clínicas de BinPar", "el equipo de BinPar". No article before the name: "BinPar convierte…", never "la BinPar" |
+| **Product or company** | The name covers both. When a sentence needs the difference: *la plataforma* for the product, *el equipo de BinPar* for the people. The legal entity, in legal text only, is **BinPar Team S.L.** |
+| **Legacy name** | Never "Consensus Salutis", "Consensus" or "CS" in new copy. Only exception: one "formerly" note at first mention, "BinPar (antes Consensus Salutis)", where readers know the old name |
+| **Addresses and IDs** | The domain stays `consensussalutis.com` (plus `app.` and `back.`); mailboxes such as `consensussalutis@binpar.com` and IDs such as the author slug `equipo-consensus-salutis` keep the legacy spelling. Quote them verbatim, never derive a name from them, never "fix" them |
+
+> Full detail: `references/voice-and-narrator.md` §3. The name as a graphic (logo files, the
+> outlined wordmark, never typeset as a logo) belongs to the sister skill
+> `consensus-salutis-brand-design-system` (its `references/logo-usage.md`).
 
 ---
 
@@ -62,10 +90,12 @@ problem, the organisation, the document or the process.
   sale, at most a couple of times in the body. That is what makes a piece read as sector
   analysis instead of a brochure.
 - **Typified exception:** the **nota de producto** archetype, written in the third person of
-  Consensus Salutis.
+  BinPar.
 - **No second person.** Neither "tú" nor "usted". Write about "los equipos clínicos", "las
   organizaciones sanitarias", "el profesional". It is the register that ages best and the one
-  that fits the public healthcare buyer.
+  that fits the public healthcare buyer. The site's contact assistant and platform page use *tú*
+  throughout: an observed exception there, not a rule here (known debt,
+  `references/examples-and-rewrites.md` §3).
 
 > Full detail: `references/voice-and-narrator.md`
 
@@ -81,8 +111,11 @@ juzga / decide* attributes agency, and with agency comes clinical responsibility
 |---|---|
 | recupera, referencia, sintetiza, prioriza, señala, devuelve, contrasta, enlaza, registra, versiona | entiende, sabe, interpreta, juzga, decide, opina, diagnostica, aprende de ti, comprende, razona |
 
-The production copy already does this correctly. *"El sistema recupera conocimiento relevante
-del corpus médico"*, *"contrasta las fuentes recuperadas"*. Keep it.
+Most of the production copy does this correctly: *"El profesional formula una duda clínica en
+lenguaje natural"*, *"La respuesta reúne la orientación clínica y permite consultar las fuentes
+que respaldan sus conclusiones"*. Keep it. The exception is the process walkthrough (an
+*orquestador* that "construye una orientación conjunta", experts quoted in the first person):
+known debt, never a model (`references/examples-and-rewrites.md` §12).
 
 > Full verb tables: `references/language-rules.md`
 
@@ -102,8 +135,14 @@ and already exist in the product.
 | **corpus vivo** | A base that changes, and therefore needs versioning |
 | **umbral de revisión** | When an answer requires a human eye |
 
-**Banned as vague, or for implying the professional is replaced:** copiloto, asistente virtual,
-agente, cerebro clínico.
+**Allowed public framing:** *comité clínico* and *comité de expertos* for the multi-specialty
+consultation, already public on the site and in the product. The committee keeps documentary
+verbs (reúne, contrasta, sintetiza) and never reads as a human panel that reviewed the answer.
+
+**Banned as vague, or for implying the professional is replaced (M7):** copiloto, asistente
+virtual, agente, cerebro clínico, and *orquestado* / *orquestación* as an adjective or abstract
+noun. **Banned as architecture vocabulary (H7, disclosure):** agentes expertos, orquestador,
+sub-agente. The site still uses some of them: known debt, not precedent.
 
 > Full detail, plus the buzzword ban list: `references/language-rules.md`
 
@@ -136,7 +175,8 @@ Public copy stops at the **functional level**: what the organisation gets and wh
 has. Never the implementation.
 
 **Banned in public material:** Convex, AI SDK, CRC, checksum, anchor, delta, VFS, table names,
-model slots, model providers and versions, orchestrator/expert internals.
+model slots, model providers and versions, orchestrator/expert internals (*orquestador*, *agentes
+expertos*; the public face is *comité de expertos*).
 
 The mechanism may justify why a piece exists, but the text describes **the problem and the
 guarantee**:
@@ -170,11 +210,13 @@ Reflective closing, no call to action: conversion is done by the product pages. 
 
 These target what is in the website repo today.
 
-- **No trailing period in titles.** Today it is inconsistent: `"Cómo medir la fiabilidad de una
-  respuesta clínica."` with a period against `"Del documento fuente a la decisión: evidencia
-  visible en cada consulta"` without one. Never a period, in H1, H2, H3, card titles, hero
-  headlines or `excerpt`-adjacent titles.
-- **No paragraph that restates the previous one.** the seed post `como-medir-la-fiabilidad-de-una-respuesta-clinica.mdx` is padded with LLM filler
+- **No trailing period in titles.** The site does the opposite on purpose: the post title
+  `"Cómo medir la fiabilidad de una respuesta clínica."` and every display heading
+  (`"Respuestas clínicas trazables."`, `"De la consulta clínica a la evidencia."`) end with one.
+  That is an observed exception on the site, not a rule. Never a period in new copy: H1, H2, H3,
+  card titles, hero headlines or `excerpt`-adjacent titles.
+- **No paragraph that restates the previous one.** The seed post
+  `como-medir-la-fiabilidad-de-una-respuesta-clinica.mdx` is padded with LLM filler
   ("Estas señales no siempre indican un fallo grave, pero sí justifican una revisión"). Use it as
   a structural template, never as a quality standard.
 - **No chained nominalisation.** Turn nouns back into verbs.
@@ -226,9 +268,12 @@ correcciones*, or *reescritura*.
 - [ ] **Rhythm**: one idea per sentence, paragraphs of 3-5 lines
 - [ ] **Warmth**: clinical judgement respected: el sistema ordena, el clínico decide
 - [ ] **Narrator**: impersonal analytical, no "nosotros", no "tú"/"usted"
+- [ ] **Name**: BinPar, exactly so; never Consensus Salutis / Consensus / CS / Binpar / BINPAR
+      typed (one "antes Consensus Salutis" note allowed)
 - [ ] **Product placement**: absent from the opening and the close, at most twice in the body
 - [ ] **No personification**: no entiende/sabe/juzga/decide/interpreta
-- [ ] **Lexicon**: coined terms used consistently; no copiloto/asistente/agente/cerebro clínico
+- [ ] **Lexicon**: coined terms used consistently; no copiloto/asistente/agente/cerebro clínico;
+      no agentes expertos/orquestador/orquestado; *comité clínico* allowed, never as a human panel
 - [ ] **Red line 1**: nothing that reads as diagnosis or therapeutic indication
 - [ ] **Red line 2**: no efficacy claim or figure without a citable source and its context
 - [ ] **Red line 3**: no CE/MDR/certification/AI Act conformity implied
@@ -252,7 +297,7 @@ correcciones*, or *reescritura*.
 | `references/language-rules.md` | Allowed/banned verbs, coined lexicon, buzzwords, rhythm, nominalisation, titles, punctuation | Writing sentences, choosing words, fixing style |
 | `references/clinical-red-lines.md` | Diagnosis, efficacy, regulatory, competitors, disclosure boundary | Any claim about what the system does or achieves |
 | `references/post-archetypes.md` | The five archetypes: structure, section budgets, openings, closings | Planning a blog piece |
-| `references/examples-and-rewrites.md` | Before/after on real repo copy | Learning the voice by contrast |
+| `references/examples-and-rewrites.md` | Before/after on real repo copy; known debt in the site copy (§12) | Learning the voice by contrast; reviewing site copy |
 | `references/review-checklist.md` | Severities, review table format, worked audit | Auditing existing copy |
 
 ---
@@ -266,30 +311,36 @@ correcciones*, or *reescritura*.
 **Expected behaviour:** Identify the archetype (**mecanismo**, 1.200-1.600 words). Open with the
 sector problem, a citation that stops pointing at the right paragraph after the document is
 updated, with no product mention. Use *evidencia visible* and *corpus vivo* consistently.
-Describe the guarantee, never the anchor/CRC mechanism. Mention Consensus Salutis at most twice
-in the body. Close reflectively, no CTA. H1 and all headings without a trailing period.
+Describe the guarantee, never the anchor/CRC mechanism. Mention BinPar at most twice in the
+body. Close reflectively, no CTA. H1 and all headings without a trailing period.
 
 ### Example 2: auditing existing copy
 
 **Request:** *"Revisa la home contra la voz de marca"*
 
-**Expected behaviour:** Produce the severity table. Flag *"Conocimiento clínico gobernado por
-IA."* as LOW (trailing period), *"capa de consulta institucional con gobierno del dato"* as
-MEDIUM (noun stacking with no operational anchor), *"Hablemos de tu organización sanitaria."* as
-MEDIUM (second person). Each row carries a proposed rewrite. End with a verdict.
+**Expected behaviour:** Produce the severity table. Flag *"El sistema selecciona los agentes
+expertos adecuados…"* and *"El orquestador reúne las aportaciones de los expertos…"* as HIGH
+(H7, architecture vocabulary), the first-person expert quote *"no asumiría que el edema es
+exclusivamente renal"* as HIGH (H6), *"Conocimiento clínico orquestado por IA."* as MEDIUM (M7)
+plus LOW (L1), *"El futuro de la salud. Ya está aquí."* as MEDIUM (M8, M9), *"Una capa de IA
+seria, auditable y preparada para operar dentro de un sistema sanitario."* as MEDIUM (M1, no
+operational anchor), *"Hablemos de tu organización."* as MEDIUM (M4, M5), and the cover lede
+*"BinPar la IA médica institucional…"* as LOW (L11, missing *es*). These are recorded known debt:
+flag them anyway and take the rewrites from `references/examples-and-rewrites.md` §12. Each row
+carries a proposed rewrite. End with a verdict.
 
 ### Example 3: a product note
 
 **Request:** *"Anuncia las preguntas de control en el blog"*
 
 **Expected behaviour:** Use the **nota de producto** archetype (500-800 words). Third person of
-Consensus Salutis is allowed here, and so is a single CTA. Still no personification, still no
-efficacy claim, still functional level only.
+BinPar is allowed here, and so is a single CTA. Still no personification, still no efficacy
+claim, still functional level only.
 
 ### Example 4: a request that crosses a red line
 
 **Request:** *"Di que reducimos los errores diagnósticos un 30%"*
 
 **Expected behaviour:** Decline the claim, name red line 2, and offer the defensible alternative:
-report the documented technical signal with its context (as `src/app/evidencia` already does),
-or state the figure only with a citable study attached.
+report the documented technical signal with its context (`references/clinical-red-lines.md`
+§2), or state the figure only with a citable study attached.

@@ -71,30 +71,63 @@ Rules of use:
 - One flag term per piece is enough. Repeating *consenso verificable* five times reads as a slogan.
 - Define a term the first time it appears in a piece, in one clause, then use it bare.
 - Do not invent new coined terms without adding them here first.
-- Existing product vocabulary from the website stays as-is: *ingesta multiformato*, *ciclo de
-  publicación*, *roles institucionales*, *dashboard operativo*, *tests automáticos*, *gobierno
-  del dato*.
+- Current public product vocabulary (website `70613ae` and the product) is reused as-is:
+  *respuestas clínicas trazables*, *fuentes verificables*, *evidencia trazable*, *consulta
+  clínica*, *conversación con contexto*, *aportaciones*, *Bibliografía* (the references
+  heading), *epígrafes clínicos*, *preguntas de evaluación*, *volumen y actualización*.
+- Former website vocabulary (old plataforma page, rewritten in `79663ea`) stays allowed but is
+  no longer quoted from the site: *ingesta multiformato*, *ciclo de publicación*, *roles
+  institucionales*, *dashboard operativo*, *tests automáticos*, *gobierno del dato*.
+
+### Public framing of the consultation: *comité*
+
+*comité clínico* and *comité de expertos* are allowed public lexicon. Both are already public:
+the home's chat mock ("Comité clínico", "Pregunta clínica al comité..."), process step 02
+("Comité de expertos") and the product's own chat. They are the public face of what the
+architecture calls orchestrator and experts, and the right target when rewriting *agentes
+expertos* or *orquestador*.
+
+| Rule | On-brand | Off-brand |
+|---|---|---|
+| Documentary verbs only | "el comité de expertos reúne las aportaciones de cada especialidad" | "el comité opina", "el comité decide la pauta" |
+| Specialties and their corpus, not people | "consulta los corpus de Cardiología, Farmacología y Nefrología" | "un comité de especialistas revisa el caso" |
+| Never a human sign-off | "la respuesta reúne las aportaciones con su procedencia; el clínico decide" | "validado por un comité de expertos" |
+
+A committee that "validates" or "reviews" an answer claims a human review that did not happen.
+That is HIGH (H9), not a lexicon slip.
 
 ### Banned lexicon
 
-**Because they are vague or imply the professional is replaced:**
+**Because they are vague or imply the professional is replaced (M7):**
 
 - copiloto
 - asistente virtual
-- agente (in customer-facing copy; internally it is the architecture's term)
+- agente (in customer-facing copy)
 - cerebro clínico
 - segunda opinión (implies a clinical opinion)
 - IA que piensa como un médico
+- orquestado, orquestación (as an adjective or abstract noun: "orquestado por IA" names no
+  component)
 
-**Corporate buzzwords:**
+**Because they name the architecture (H7, a disclosure breach, `clinical-red-lines.md` §6):**
+
+- orquestador
+- agentes expertos (internally it is the architecture's term)
+- sub-agente
+
+The home hero ("orquestado por IA", M7) and the process walkthrough ("agentes expertos",
+"orquestador", H7) still use them: known debt (`examples-and-rewrites.md` §12), never precedent.
+
+**Corporate buzzwords (M8):**
 
 - solución integral, solución end-to-end, solución escalable
 - disruptivo, revolucionario, puntero, de vanguardia, next-generation
 - sinergia, apalancar, cambio de paradigma
 - ecosistema (unless it literally means a set of integrated systems)
 - transformación digital as a standalone promise
+- futurism: el futuro de la salud, ya está aquí, la sanidad del futuro
 
-**Commercial fear (banned, see `clinical-red-lines.md` §5 for the legitimate alternative):**
+**Commercial fear (H8, see `clinical-red-lines.md` §5 for the legitimate alternative):**
 
 - "no te quedes atrás"
 - "el futuro no espera"
@@ -169,16 +202,24 @@ revisión" becomes useful the moment it says *who* reviews and *what they look a
 - Headings carry the anchor too: *"Señales de alerta"* is fine; *"Consideraciones adicionales"*
   is not.
 
-### The trailing-period debt in the repo
+### The trailing-period debt on the site
 
-Every H1 in the site carries a trailing period. Titles to fix when touched:
+Every display heading on the site carries a trailing period, and the two-line headings are two
+sentences with the second in the accent colour. That is the site's deliberate style since the
+redesign, recorded here as an observed exception, not a rule. New copy drops the period; when a
+two-line heading needs two clauses, join them with a comma. Titles to fix when touched:
 
-| Current | Fixed |
-|---|---|
-| "Cómo medir la fiabilidad de una respuesta clínica." (post frontmatter) | "Cómo medir la fiabilidad de una respuesta clínica" |
-| "Conocimiento clínico gobernado por IA." (home H1) | "Conocimiento clínico gobernado por IA" |
-| "Un sistema operativo para el conocimiento clínico." (plataforma H1) | "Un sistema operativo para el conocimiento clínico" |
-| "Precisión medible sin perder trazabilidad clínica." (evidencia H1) | "Precisión medible sin perder trazabilidad clínica" |
+| Current | Where | Fixed |
+|---|---|---|
+| "Cómo medir la fiabilidad de una respuesta clínica." | post frontmatter | "Cómo medir la fiabilidad de una respuesta clínica" |
+| "Respuestas clínicas trazables." | cover H1, accent line (`home-cover.tsx`) | "Respuestas clínicas trazables" |
+| "Conocimiento clínico orquestado por IA." | home hero H2 (`horizontal-home.tsx`) | Period and lexicon: `examples-and-rewrites.md` §12 |
+| "El futuro de la salud. Ya está aquí." | casos H2 (`territorial-case-definitive-two.tsx`) | A rewrite, not a period fix: `examples-and-rewrites.md` §12 |
+| "Tres capacidades. Una sola arquitectura." | arquitectura H2 (`product-strata-scene.tsx`) | "Tres capacidades, una sola arquitectura" |
+| "El conocimiento avanza. La base se actualiza." | volumen H2 (`volume-section.tsx`) | "El conocimiento avanza, la base se actualiza" |
+| "De la consulta clínica a la evidencia." | plataforma H1 (`platform-walkthrough.tsx`) | "De la consulta clínica a la evidencia" |
+| "El conocimiento de tu organización, en cada consulta." | plataforma CTA H2 | "El conocimiento de cada organización, en cada consulta" (also M4) |
+| "Hablemos de tu organización." | contacto H2 (`contact-assistant.tsx`) | `examples-and-rewrites.md` §3 (also M4, M5) |
 
 `excerpt` fields are full sentences and **do** take a period.
 

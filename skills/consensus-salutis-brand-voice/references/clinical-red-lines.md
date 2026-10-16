@@ -6,8 +6,8 @@
 
 ## 1. No diagnosis, no therapeutic indication
 
-Consensus Salutis is a decision-support and evidence-consultation layer. It does not diagnose,
-does not prescribe and does not recommend a course of treatment for a specific patient.
+BinPar is a decision-support and evidence-consultation layer. It does not diagnose, does not
+prescribe and does not recommend a course of treatment for a specific patient.
 
 ### Banned constructions
 
@@ -35,8 +35,13 @@ not the patient and the outcome. Acceptable: *"una duda sobre criterios de deriv
 paciente pluripatológico"*, where the example names the documentary problem. Not acceptable: any
 example that states what should be done to that patient.
 
-The disclaimer sentence from the production copy is the brand's standing position and can be
-quoted verbatim wherever the boundary needs stating:
+The website's process walkthrough (`clinical-process-*`) crosses this line: it takes a described
+patient to considerations such as *"Revisar AINE, IECA/ARA-II y diuréticos por riesgo renal e
+hiperpotasemia."* Known debt, never a model (`examples-and-rewrites.md` §12).
+
+The disclaimer sentence from the former evidencia page (deleted in website `79663ea`) is the
+brand's standing position, now owned by this skill, and can be quoted verbatim wherever the
+boundary needs stating:
 
 > "El producto se comunica como soporte a decisión y consulta de evidencia, no como sustituto del
 > criterio profesional."
@@ -57,11 +62,12 @@ citable study. Not an anecdote, not a pilot impression, not a plausible inferenc
 
 ### What is allowed
 
-**Documented technical signal, with its context.** The evidence page already models this correctly:
+**Documented technical signal, with its context.** The former evidencia page modelled this
+correctly; the page is gone, and the wording stays as the skill's model:
 
 > "600/600 — Señal técnica MIR documentada y contextualizada."
 > "Los benchmarks se presentan como señal técnica contextualizada."
-> — `src/app/evidencia/page.tsx`
+> — former `src/app/evidencia/page.tsx` (website ≤ `2449496`)
 
 That is a benchmark result about the system, not a clinical outcome about patients, and it is
 labelled as such. Keep the labelling. A bare "600/600" without "señal técnica contextualizada"
@@ -69,7 +75,9 @@ nearby drifts toward an efficacy claim.
 
 **Operational facts about the platform** are fine and need no study: number of supported formats,
 roles available, RPO of 24 hours, RTO under 8 hours, corpus size, years of editorial curation.
-They describe the product, not its clinical effect.
+They describe the product, not its clinical effect. The home's volume band is the live model:
+*"+3 TB Conocimiento médico estructurado"*, *"+8.327 Epígrafes clínicos"*, *"+30.000 Preguntas de
+evaluación"*, *"<24 h Actualización urgente"* (`volume-section.tsx`).
 
 ### If a figure is requested and no study exists
 
@@ -95,12 +103,13 @@ Never state or imply a certification the product does not hold.
 
 ### The safe pattern: design orientation, not conformity
 
-The security page states it exactly right, and the wording is reusable:
+The former security page stated it exactly right; the page is gone and the wording stays
+reusable as the skill's standing position:
 
 > "La comunicación pública habla de diseño orientado a cumplimiento, controles técnicos y
 > trazabilidad, evitando promesas absolutas si no van acompañadas de certificaciones o informes
 > específicos."
-> — `src/app/seguridad/page.tsx`
+> — former `src/app/seguridad/page.tsx` (website ≤ `2449496`)
 
 | Off-brand | On-brand |
 |---|---|
@@ -160,12 +169,20 @@ has. Never the implementation.
 ### Banned terms in public material
 
 Convex, AI SDK, Vercel AI SDK, CRC, CRC-8, checksum, anchor, anchors, delta, PR, VFS, orquestador,
-sub-agente, tool, prompt, embedding, chunking, RAG, table or collection names, model slots,
-provider names, version numbers, `<remember>` / `<update>` / `<bookmark>` and any other internal
-markdown tag, token counts of the corpus internals.
+agentes expertos, sub-agente, tool, prompt, embedding, chunking, RAG, table or collection names,
+model slots, provider names, version numbers, `<remember>` / `<update>` / `<bookmark>` and any
+other internal markdown tag, token counts of the corpus internals.
 
 Some of these are respectable engineering vocabulary. They are still out: they describe how it is
 built, and public copy answers what it guarantees.
+
+*comité clínico* and *comité de expertos* are **not** on this list. They are the allowed public
+face of the orchestrator and its experts (rules in `language-rules.md` §2). The site's process
+walkthrough still says *agentes expertos* and *orquestador*: known debt, never precedent.
+
+*orquestado* and *orquestación* are not on it either. As an adjective or an abstract noun
+("orquestado por IA") they name no component: banned lexicon (M7, `language-rules.md` §2), not a
+disclosure breach (H7).
 
 ### The translation table
 
@@ -174,14 +191,18 @@ built, and public copy answers what it guarantees.
 | Anchors with CRC-8 over a global counter | "una cita que sigue apuntando al párrafo correcto después de que el documento se actualice, y que puede verificarse" |
 | Delta per expert reviewed as a PR | "los cambios se proponen sobre el contenido existente y un editor humano los revisa antes de publicarlos" |
 | Full-context injection per expert | "cada especialidad se consulta sobre su propia base curada" |
-| Orchestrator + expert loop | "la consulta se resuelve contra las fuentes relevantes y se sintetiza una respuesta con su procedencia" |
+| Orchestrator + expert loop | "la consulta se resuelve contra las fuentes relevantes y se sintetiza una respuesta con su procedencia"; where the multi-specialty framing helps, "el comité de expertos reúne las aportaciones de cada especialidad, cada una consultada sobre su propio corpus" |
 | `<bookmark>` tags in the enriched markdown | "cada fragmento conserva el enlace a su sección de origen" |
 | Test/preproduction/production environments in Convex | "pruebas, preproducción y producción separadas para cargar, validar y publicar conocimiento sin perder control" |
 | Regression suite over control questions | "preguntas clave para comprobar que nuevos contenidos no degradan respuestas críticas" |
 | Multi-tenant inheritance | "cada organización mantiene su propio conocimiento sobre una base común" |
 
-The last three rows are the website's own wording. When in doubt, check whether the concept
-already has a public phrasing in `src/app/plataforma` or `src/app/seguridad` and reuse it.
+The test/preproduction and regression rows were the website's own wording on the former
+plataforma page (website ≤ `2449496`); the multi-tenant row is the skill's own phrasing. All
+three stay as standing phrasing. When in doubt, check whether
+the concept already has a public phrasing in the current site (`clinical-process-showcase.tsx`,
+`volume-section.tsx`, `product-strata/product-strata-scene.tsx`) and reuse it, except the
+fragments listed as known debt in `examples-and-rewrites.md` §12.
 
 ### The rule of thumb
 
@@ -189,6 +210,7 @@ Describe **the problem and the guarantee**. If a sentence would only make sense 
 read the repository, it is over the line.
 
 Named third-party infrastructure that is part of the commercial story is the exception and stays
-allowed, because it is already public: AWS, Editorial Médica Panamericana, BinPar, and the
-observability integrations the security page lists (CloudWatch, Datadog, Splunk, Grafana Loki,
-Sentry). Those are integration targets the buyer asks about, not internals.
+allowed, because it is already public: AWS and Editorial Médica Panamericana (the two pillars
+beside BinPar in the home's architecture section), and the observability integrations the former
+security page listed (CloudWatch, Datadog, Splunk, Grafana Loki, Sentry). Those are integration
+targets the buyer asks about, not internals. BinPar is the product's own name, not a third party.

@@ -1,17 +1,22 @@
 # Colors & Design Tokens
 
-> Sources: brand manual palette ("Aspectos técnicos") + production tokens in
-> `consensus-salutis-website/src/styles/globals.css` and component usage.
+> Sources: brand manual palette ("Aspectos técnicos", Consensus Salutis era —
+> still the base palette) + production tokens in
+> `consensus-salutis-website/src/styles/globals.css` (unchanged by the BinPar
+> rebrand) and component usage, incl. `footer-design.css`,
+> `volume-section.css`, `section-navigation.css`, `home-cover.css`,
+> `contact-assistant/contact-assistant.css` (website HEAD `70613ae`).
 
 ## Brand palette (manual)
 
-The brand manual defines six base tones:
+The brand manual defines six base tones. The BinPar rebrand kept them: tokens
+did NOT move to the new logo files' colors.
 
 | Name | HEX | RGB | Role |
 |------|-----|-----|------|
-| Deep Navy | `#002262` | 0, 34, 98 | Logo wordmark "CONSENSUS" (light), institutional anchor |
-| Dark Teal | `#006D79` | 0, 109, 121 | Primary accent in **light** mode, isotipo fill |
-| Turquoise | `#00BCBB` | 0, 188, 187 | Primary accent in **dark** mode, isotipo fill (dark) |
+| Deep Navy | `#002262` | 0, 34, 98 | Institutional anchor; BinPar wordmark on light (logo file uses `#002366`) |
+| Dark Teal | `#006D79` | 0, 109, 121 | Primary accent in **light** mode; mark on light (file `#006f7b`) |
+| Turquoise | `#00BCBB` | 0, 188, 187 | Primary accent in **dark** mode; mark on dark (file `#00bebc`) |
 | White | `#FFFFFF` | 255, 255, 255 | Wordmark on dark, base surfaces |
 | Lime Yellow | `#F6FF53` | 246, 255, 83 | Secondary/CTA accent in **dark** mode |
 | Warm Yellow | `#FFD230` | 255, 210, 48 | Secondary/CTA accent in **light** mode |
@@ -19,7 +24,7 @@ The brand manual defines six base tones:
 ## Website theme tokens (Tailwind v4 `@theme`)
 
 This is the exact production token block. Reproduce it verbatim when generating
-CSS for any Consensus Salutis web property:
+CSS for any BinPar web property:
 
 ```css
 @import "tailwindcss";
@@ -69,7 +74,7 @@ them: `text-primary-light dark:text-primary-dark`.
 | Role | Light mode | Dark mode |
 |------|-----------|-----------|
 | Primary accent (links, eyebrows, numbers, focus) | `primary-light` `#006d79` | `primary-dark` `#00BCBB` |
-| Primary hover / emphasis | `cyan-800` (Tailwind) / `#087a85` | `primary-dark-lighter` `#71fffe` |
+| Primary hover / emphasis | `cyan-800` (Tailwind) / `#087a85`; cover CTA `#155e75`; send buttons `#085b67` | `primary-dark-lighter` `#71fffe` |
 | Secondary / contrast accent (yellow) | `secondary-light` `#ffd230` | `secondary-dark` `#f6ff53` |
 | Text on secondary CTA | `#06111f` | `#06111f` |
 | Text on primary filled button | `#FFFFFF` | `#04111e` / `#03111d` (near-black navy) |
@@ -84,12 +89,27 @@ them: `text-primary-light dark:text-primary-dark`.
 |---------|-------|------|
 | Body / page base | `#f4f9fc` | `#06111f` |
 | Home shell | `#fbfdff` | `#06111f` |
-| Deep band (`ThemeSection variant="deep"`, footer band) | `#deedf3` | `#030916` |
-| Panel band (`variant="panel"`, vertical footer) | `#e8f2f7` | `#081827` |
+| Deep band (`ThemeSection variant="deep"`) | `#deedf3` | `#030916` |
+| Panel band (`variant="panel"`; contact-details band at `/80`) | `#e8f2f7` | `#081827` |
 | Card / glass surface | `bg-white/70`–`bg-white/90` | `bg-[#152230e6]/90` (also `bg-white/3`, `bg-[#081a2b]/82`) |
 | Input fields | `bg-white/60` → focus `bg-white` | `bg-[#04111e]/68` → focus `bg-[#061a2a]` |
 | Section gradients | `linear-gradient(135deg, rgba(222,237,243,.74–.82), rgba(237,246,249,.3–.42))` | `linear-gradient(135deg, rgba(3,9,22,.74–.82), rgba(8,24,39,.48))` |
+| **Contrast band** (volume, footer) | `radial-gradient(ellipse at 90% 90%, rgb(0 109 121 / 22%), transparent 60%), #081827` | **same** (theme-fixed) |
+| Contrast-band tiles | `rgb(0 188 187 / 5%)` + `1px solid rgb(0 188 187 / 22%)`, radius 18px | same |
+| Process / case card | `bg-white/95` | process `bg-[#152230]/95` · case `bg-[#102330]/95` |
+| App-icon tile (`::before`, production) | `#fff` (static variant, unused at HEAD: `linear-gradient(145deg, #fff, #f6fafc)`) | `#102535` (static: `linear-gradient(145deg, #172c3d, #0c1c2b)`) |
 | Route-transition overlay | `#deedf3` | `#030916` |
+
+**Contrast band.** The one deliberately theme-fixed surface: a navy band
+identical in light and dark (`volume-section.css:233-242`,
+`footer-design.css:352-361`, `palette="original"`). At HEAD only the volume
+band carries `data-section-navigation-surface="dark"` (`volume-section.tsx:84-86`,
+set only for `palette="original"`); `ContrastFooter` does not, so the section
+index gets no contrast clone over the footer. Mark any new contrast band the
+index can overlap with that attribute so overlays swap to their contrast
+colors over it. The logo on a contrast band is always the `-dark` file.
+The `palette="teal"` default of those components (`#006d79 → #006875 →
+#005b68`) is lab-only — don't ship it.
 
 ### Text
 
@@ -100,12 +120,36 @@ them: `text-primary-light dark:text-primary-dark`.
 | Primary body | `slate-700` | `slate-300` |
 | Secondary body | `slate-600` | `slate-400` |
 | Muted / meta | `slate-500` | `slate-500` |
+| Muted in custom CSS (section index, contact, footer, map labels) | `#64748b` / `#475569` | **`#a9bacb`** |
+| Light footer text (`.ft-proposal`, lab palettes) | `#54657b` | `#a9bacb` |
+| Composer placeholder / icons | `#647b94` | — |
 | Errors (forms) | `rose-700` | `rose-300` |
-| Success/status accent (chat "Entorno seguro") | `teal-700` | `teal-200` |
+| Status accent | `teal-700` | `teal-200` |
+
+On the **contrast band** (both themes): heading `#f8fafc`, body `#b5c4d2`,
+accent `#00bcbb`, lines `rgb(0 188 187 / 22%)`.
 
 **Heading navy `#05215e`**: the implementation uses `#05215e` for headings (a
-slightly cooler shade of the brand's `#002262`). Use `#05215e` in web UI to match
-production; use `#002262` only in the logo and print/brand assets.
+slightly cooler shade of the brand's `#002262`); custom CSS uses `#f8fafc` for
+dark headings. Use `#05215e` in web UI to match production; `#002262` is the
+print navy. The logo SVGs carry their own fills (`#002366`) — never recolor
+them.
+
+### Logo-file colors vs tokens
+
+| Role | Token (UI) | Inside the SVG files only |
+|------|-----------|---------------------------|
+| Mark on light | `#006d79` | `#006f7b` |
+| Mark on dark | `#00BCBB` | `#00bebc` |
+| Wordmark on light | `#05215e` / `#002262` | `#002366` |
+| Wordmark on dark | white | `#fff` |
+
+The 1–2-unit drift is an Illustrator export artifact. Keep it inside the
+files; never adopt it as UI color and never edit the files to "fix" it.
+Inline or animated marks use `currentColor` from the tokens
+(`text-primary-light dark:text-primary-dark`). The website's cover animation
+hard-codes `#006f7b` / `#00bcbb` (`home-cover.css:156-164`,
+`brand-isotype-particles.tsx`); new work follows the token rule.
 
 ### Borders
 
@@ -127,7 +171,12 @@ Borders are translucent cyan, never opaque gray:
 | Dark CTA glow | `shadow-[0_0_34px_rgba(45,212,191,0.26)]` or `shadow-[0_0_24px_rgba(0,188,187,0.18)]` | Primary filled buttons in dark mode |
 | Node glow | `shadow-[0_0_18px_rgba(103,232,249,0.18)]` | Process step circles (dark) |
 | Progress glow | `shadow-[0_0_18px_rgba(34,211,238,0.55)]` | Horizontal progress bar |
-| Deep panel shadow | `shadow-2xl shadow-slate-900/10` (light) / `shadow-cyan-950/30` (dark) | Chat mock, contact form |
+| Deep panel shadow | `shadow-2xl shadow-slate-900/10` (light) / `shadow-cyan-950/30` (dark) | Legacy contact form panel |
+| Process card | `shadow-[0_8px_24px_rgba(0,109,121,0.05)]` (coordinator `0.10`) | Process scenes |
+| Case card | `shadow-[0_8px_24px_-18px_rgba(0,109,121,.25)]` | Map callout cards |
+| App-icon tile | `0 2px 3px rgba(5,33,94,0.08), 0 12px 28px rgba(5,33,94,0.07)`; dark `0 2px 3px rgba(0,0,0,0.2), 0 12px 28px rgba(0,0,0,0.15)` — no inset highlight (static variant, unused at HEAD, adds `inset 0 1px 0 #fff` / `inset 0 1px 0 rgba(255,255,255,0.06)`) | Cover tile `::before` (border `rgba(5,33,94,0.08)` / `rgba(125,211,252,0.16)`) |
+| Preview frame | `0 24px 80px rgb(0 34 98 / 9%), 0 4px 16px rgb(0 109 121 / 6%)`; dark `0 24px 80px rgb(0 0 0 / 28%)` | Product replica on `/plataforma` |
+| Composer glow (dark) | `shadow-[0_0_32px_rgba(0,188,187,0.12)]` | Chat mock composer |
 
 ### Decorative gradient stops (motion/SVG layers)
 
@@ -137,7 +186,9 @@ The SignalField / ProductSignal blobs use this fixed story of stops:
 - Teal `rgb(20 184 166)`
 - Lime `rgb(246 255 83)` (light, low alpha) / sky `rgb(125 211 252)` (dark)
 
-Grid-line color: `rgba(8,145,178,0.07–0.1)` light / `rgba(125,211,252,0.04–0.045)` dark.
+Grid-line color: `rgba(8,145,178,0.07–0.1)` light / `rgba(125,211,252,0.04–0.045)` dark;
+on the contrast band `rgb(0 188 187 / 4.5%)`. All 44px grids share one phase
+(`HomeGrid`, see `motion-system.md`).
 Lime radial glow: `radial-gradient(ellipse at 82% 24%, rgba(246,255,83,0.13), transparent 38%)`
 (dark mode drops alpha to `0.035`).
 
@@ -168,11 +219,12 @@ accent, with **yellow as the contrast color** on top of that story.
 ### Yellow (contrast color)
 
 Yellow (`secondary-light` `#ffd230` / `secondary-dark` `#f6ff53`) is the brand's
-high-emphasis contrast accent. On the current website it only appears in the
-header CTA (plus the subtle lime glow in decorative layers), but it is NOT
-limited to that: use it wherever something must stand out against the
-teal-turquoise story — key CTAs, highlighted values or keywords, active/attention
-states, badges, chart emphasis.
+high-emphasis contrast accent. On the current website it appears in the
+header CTA and the evidence highlight wash (`rgb(255 210 48 / 55%)` light,
+`rgb(246 255 83 / 32%)` dark, on cited passages), plus the subtle lime glow in
+decorative layers, but it is NOT limited to that: use it wherever something
+must stand out against the teal-turquoise story — key CTAs, highlighted values
+or keywords, active/attention states, badges, chart emphasis.
 
 Rules for yellow:
 

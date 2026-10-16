@@ -1,7 +1,11 @@
 # Typography
 
-> Sources: brand manual ("Aspectos técnicos": Plus Jakarta Sans ExtraBold) +
-> production setup in `src/app/layout.tsx` and `src/styles/globals.css`.
+> Sources: production setup in `src/app/layout.tsx` and `src/styles/globals.css`
+> (unchanged by the BinPar rebrand), plus `home-cover.css`,
+> `clinical-process-player.tsx`, `product-strata/product-strata-scene.tsx`,
+> `platform-walkthrough.tsx`, `volume-section.css`,
+> `contact-assistant/contact-assistant.css`, `section-navigation.css`,
+> `footer-design.css`; legacy: the Consensus Salutis brand manual.
 
 ## Typefaces
 
@@ -10,10 +14,17 @@
 | **Sora** | Display: headings, eyebrows, step numbers, card titles | 600 (semibold), 700 (bold), 800 (extrabold) | `.font-display` / `--font-sora` |
 | **Plus Jakarta Sans** | Body: paragraphs, buttons, links, forms, nav, meta | 400, 500 (medium), 600 (semibold) | `.font-body`, default `--font-sans` |
 
-The brand manual specifies **Plus Jakarta Sans ExtraBold** for the logotype and
-brand headlines. The website extends this with **Sora** as the display face for
-web headings; both are geometric and pair cleanly. For print/brand assets stick
-to Plus Jakarta Sans; for web UI use Sora display + PJS body as below.
+**The BinPar wordmark is not a font.** It is outlined paths (square tittle on
+the `i`, double-storey `a`), so the face is unverified: don't assume it is
+Sora or Plus Jakarta Sans. Never typeset "BinPar" as a logo; place the SVG
+(`logo-usage.md`). Where the name
+appears as text inside UI (eyebrow "BinPar", app-header label next to the
+isotipo, map label), it is set in the surrounding UI face.
+
+**Legacy**: the Consensus Salutis manual set the logotype and brand headlines
+in Plus Jakarta Sans ExtraBold. That rule is unconfirmed for BinPar: default to
+Sora display + PJS body everywhere (web, product, print, social) until a BinPar
+brand source says otherwise.
 
 Both fonts are loaded via `next/font/google` (SIL OFL, no local files needed):
 
@@ -40,17 +51,27 @@ already on-brand; `.font-display` opts into Sora.
 
 | Level | Classes | Notes |
 |-------|---------|-------|
-| Eyebrow | `font-display text-xs font-bold tracking-[0.22em] uppercase text-primary-light dark:text-primary-dark` | ALWAYS above every H1/H2 |
-| Hero H1 (home) | `font-display text-6xl font-extrabold tracking-tight text-[#05215e] dark:text-slate-50` | Mobile: `text-4xl sm:text-5xl` |
+| Eyebrow | `font-display text-xs font-bold tracking-[0.22em] uppercase text-primary-light dark:text-primary-dark` | Above every H1/H2, except the cover (it uses the app-icon tile instead) and centered two-line accent display headings: `/plataforma` H1, strata H2 |
+| Cover H1 (home) | `font-display font-extrabold tracking-tight`, 54px / 48px ≤1023px / 36px ≤767px, `line-height: 1.12`, `#05215e` / `#f8fafc`; accent `<span>` block 40px, `line-height: 1`, `margin-top: 16px` | "BinPar" + "Respuestas clínicas trazables." (`home-cover.css:25-36,96-108`) |
+| Hero H1 (legacy horizontal home) | `font-display text-6xl font-extrabold tracking-tight text-[#05215e] dark:text-slate-50` | Mobile: `text-4xl sm:text-5xl` |
+| Hero section H2 (vertical home) | `font-display mt-5 max-w-4xl text-4xl leading-tight font-extrabold tracking-tight xl:text-5xl` | Same colors; the hero became a section after the cover |
+| Two-line display (accent 2nd line) | `font-display text-[32px] sm:text-[40px] lg:text-[54px] leading-[1.08] font-extrabold tracking-tight text-[#05215e] dark:text-slate-50` + `<br/><span class="text-primary-light dark:text-primary-dark">` | `/plataforma` H1 (`platform-walkthrough.tsx`); strata H2 `text-4xl sm:text-5xl lg:text-[54px] leading-[1.08]`; cases H2 |
+| Stage H3 | `font-display mt-3.5 max-w-xl text-4xl font-extrabold tracking-tight text-[#05215e] sm:mt-6 sm:text-5xl dark:text-slate-50` | Process player (`clinical-process-player.tsx:30-31`) |
+| Stage counter / signal | eyebrow recipe: "01 / 05" above the H3, signal label below | `text-xs font-bold tracking-[0.22em] uppercase` accent |
 | Page H1 | `font-display text-4xl sm:text-5xl font-extrabold tracking-tight` (blog index: `text-5xl sm:text-6xl`) | Same colors as hero |
 | Section H2 | `font-display text-5xl font-extrabold tracking-tight` (desktop panels) / `text-3xl sm:text-4xl` (mobile/compact) | Constrain with `max-w-*` per content |
 | Card / sub H3 | `font-display text-base`–`text-lg font-semibold text-[#05215e] dark:text-slate-100` | |
 | Lede paragraph | `font-body text-lg leading-8 text-slate-600 dark:text-slate-400` (hero: `text-xl leading-9 text-slate-700 dark:text-slate-300`) | `max-w-2xl`–`max-w-5xl` |
 | Body | `font-body text-base leading-7 text-slate-700 dark:text-slate-300` | |
 | Card body | `font-body text-sm leading-6 text-slate-600 dark:text-slate-400` | |
-| Micro-label / signal | `font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-primary-light dark:text-primary-dark` | Under process steps, pillar roles (`text-xs tracking-[0.13em]`–`[0.18em]`) |
+| Micro-label / signal | `font-body text-[10px] font-semibold tracking-[0.12em] uppercase text-primary-light dark:text-primary-dark` | Pillar roles (`text-xs tracking-[0.13em]`–`[0.18em]`) |
+| Micro-label (display) | `font-display text-[10px] font-semibold uppercase tracking-[.19em]` accent ("Capa 01 / 03"); `text-[10px] font-bold tracking-[0.22em]` (chat-mock / replica welcome eyebrow) | Strata, product replica |
+| Band H2 (contrast band) | Sora 800, 48px / 40px ≤1100px / 30px ≤767px, `letter-spacing: -0.045em`, `line-height: 1.16`; figures 38px 700 `-0.04em` `tabular-nums` | `volume-section.css` |
+| Assistant heading | Sora 700, 32px, `line-height: 1.25`, `letter-spacing: -0.035em`; dialogue PJS 18px/30px | `contact-assistant.css` |
+| Section index link | 13px 600 (current 700), right-aligned | `section-navigation.css` |
+| Footer (contrast) | eyebrow Sora 9px 700 `0.16em` uppercase; links 12px/20px; legal 10px/18px | `footer-design.css` |
 | Meta (dates, read time) | `text-xs font-medium text-slate-500 dark:text-slate-400` | With lucide icons `size-3.5 strokeWidth={1.8}` |
-| Footer band link | `text-[9px] font-semibold tracking-[0.16em] uppercase` | |
+| Footer band link (legacy horizontal home) | `text-[9px] font-semibold tracking-[0.16em] uppercase` | |
 
 ## Rules
 
@@ -64,8 +85,14 @@ already on-brand; `.font-display` opts into Sora.
   eyebrows, CTAs use sentence case: "Solicitar reunión", "Ver todos").
 - Numbers that need emphasis (metric values, step numbers) use `font-display`.
 - Line height is generous: `leading-7`/`leading-8`/`leading-9` for reading text.
+- Two-line display headings put the second line in the accent
+  (`text-primary-light dark:text-primary-dark`). Punctuation of headings is a
+  voice decision (`consensus-salutis-brand-voice`), not a type rule.
 - Language is Spanish; keep copy institutional, sober and precise ("IA médica
-  institucional", "trazable", "gobernado").
+  institucional", "trazable", "fuentes verificables"). Wording rules live in
+  the `consensus-salutis-brand-voice` skill.
+- The brand name in text is always "BinPar"; eyebrows show it uppercase via
+  CSS only.
 
 ## Article (MDX) typography
 
