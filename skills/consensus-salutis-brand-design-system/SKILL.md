@@ -11,6 +11,8 @@ description: >
   outside this product.
 ---
 
+> **Deprecated:** superseded by `binpar-brand-design-system` in BinPar/skills (identity manual v1.0). Prefer it; this copy is no longer maintained.
+
 # BinPar Brand Design System
 
 ## Brand Identity Overview

@@ -1,5 +1,17 @@
 # BinPar Skills Repository (consensus-salutis-skills)
 
+> [!WARNING]
+> **Deprecated.** This repository is retired. The BinPar brand skills now live in
+> [BinPar/skills](https://github.com/BinPar/skills) and follow the BinPar identity
+> manual v1.0: `binpar-brand-design-system` (replaces `consensus-salutis-brand-design-system`),
+> `binpar-brand-voice` (replaces `consensus-salutis-brand-voice`) and `binpar-documents`
+> (branded PDFs). Migrate with:
+>
+> ```bash
+> npx skills remove consensus-salutis-brand-design-system consensus-salutis-brand-voice
+> npx skills add BinPar/skills --skill binpar-brand-design-system --skill binpar-brand-voice -a claude-code -y
+> ```
+
 ## Naming
 
 - The product was renamed **BinPar** (website `05d5437`, 2026-10-06; it was
