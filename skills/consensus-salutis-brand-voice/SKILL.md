@@ -13,6 +13,8 @@ description: >
   it talks.
 ---
 
+> **Deprecated:** superseded by `binpar-brand-voice` in BinPar/skills (identity manual v1.0). Prefer it; this copy is no longer maintained.
+
 # BinPar Brand Voice
 
 > The product was named **Consensus Salutis** until the website rename (`05d5437`, 2026-10-06).
